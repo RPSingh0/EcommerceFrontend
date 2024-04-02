@@ -2,8 +2,9 @@ import {useQuery} from "@tanstack/react-query";
 import {getAllSubCategoryUnderOneParentCategory} from "../../services/parent-category/parentCategoryService.js";
 import {Box, styled, Typography} from "@mui/material";
 import {toTitleCase} from "../../utilities/util.jsx";
-import NamePriceImageCard from "./NamePriceImageCard.jsx";
+import NamePriceImageDashboardCard from "./NamePriceImageDashboardCard.jsx";
 import {useParams} from "react-router-dom";
+import ImageNamePriceSingleSubCategoryByParentCard from "./ImageNamePriceSingleSubCategoryByParentCard.jsx";
 
 const StyledSingleSubCategoryByParentBox = styled(Box)(({theme}) => ({
     margin: "auto",
@@ -36,13 +37,28 @@ const StyledSingleSubCategoryByParentBarBox = styled(Box)(({theme}) => ({
     borderRadius: theme.shape.borderRadius,
     padding: "0.1rem",
 
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: "1rem",
+    display: "grid",
+    columnGap: "1.5rem",
+    rowGap: "1.5rem",
 
     "&::-webkit-scrollbar": {
         display: "none"
+    },
+
+    [theme.breakpoints.down('sm')]: {
+        gridTemplateColumns: "1fr 1fr"
+    },
+
+    [theme.breakpoints.up('sm')]: {
+        gridTemplateColumns: "1fr 1fr 1fr"
+    },
+
+    [theme.breakpoints.up('md')]: {
+        gridTemplateColumns: "1fr 1fr 1fr"
+    },
+
+    [theme.breakpoints.up('xl')]: {
+        gridTemplateColumns: "1fr 1fr 1fr 1fr"
     },
 }));
 
@@ -65,7 +81,7 @@ function SubCategoryByParentContainer() {
             <StyledSingleSubCategoryByParentBarBox>
                 {!isLoading && !error &&
                     data.data.subCategories.map(category =>
-                        <NamePriceImageCard
+                        <ImageNamePriceSingleSubCategoryByParentCard
                             key={category.name}
                             data={category}/>
                     )

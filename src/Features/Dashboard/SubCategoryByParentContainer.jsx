@@ -2,7 +2,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getAllSubCategoryUnderAllParentCategory} from "../../services/parent-category/parentCategoryService.js";
 import {Box, styled, Typography} from "@mui/material";
 import {toTitleCase} from "../../utilities/util.jsx";
-import NamePriceImageCard from "./NamePriceImageCard.jsx";
+import NamePriceImageDashboardCard from "./NamePriceImageDashboardCard.jsx";
 
 const StyledSubCategoryByParentBox = styled(Box)(({theme}) => ({
     margin: "auto",
@@ -61,7 +61,7 @@ function SubCategoryByParentContainer() {
                     <StyledSubCategoryByParentBarBox>
                         {
                             value.subCategories.map(category =>
-                                <NamePriceImageCard
+                                <NamePriceImageDashboardCard
                                     key={`${key}-${category.name}`}
                                     data={category}/>
                             )
