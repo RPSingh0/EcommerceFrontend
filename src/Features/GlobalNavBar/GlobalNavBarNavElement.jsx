@@ -6,10 +6,11 @@ const StyledParentCategoryBox = styled(Box)(({theme}) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: "0.2rem"
+    gap: "0.2rem",
+    color: "#333"
 }))
 
-function ParentCategory({category}) {
+function GlobalNavBarNavElement({category}) {
     return (
         <StyledParentCategoryBox>
             {parentCategoryToIconMap[category]}
@@ -20,4 +21,4 @@ function ParentCategory({category}) {
     );
 }
 
-export default ParentCategory;
+export default GlobalNavBarNavElement;

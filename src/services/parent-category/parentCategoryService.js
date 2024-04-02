@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const URL = 'http://127.0.0.1:3000/api/v1/parentCategory';
+
 // const URL = 'https://3550-150-107-93-11.ngrok-free.app/api/v1/parentCategory';
 
 export async function getAllParentCategory() {
@@ -31,4 +32,14 @@ export async function getAllSubCategoryUnderAllParentCategory() {
     }));
 
     return allSubData;
+}
+
+export async function getAllSubCategoryUnderOneParentCategory(category) {
+    let {status, data} = await axios.get(`${URL}/under/${category}`);
+
+    if (status !== 200) {
+        throw new Error('Data not found...');
+    }
+
+    return data;
 }

@@ -1,7 +1,7 @@
-import Header from "../header/Header.jsx";
+import Header from "../../Features/Header/Header.jsx";
 import {Box, Stack} from "@mui/material";
-import ParentCategoryBar from "../parent-category/ParentCategoryBar.jsx";
-import ParentSubCategoryContainer from "../parent-sub-category-accords/ParentSubCategoryContainer.jsx";
+import GlobalNavBar from "../../Features/GlobalNavBar/GlobalNavBar.jsx";
+import SubCategoryByParentContainer from "../../Features/Dashboard/SubCategoryByParentContainer.jsx";
 import {Outlet} from "react-router-dom";
 
 function AppLayout() {
@@ -9,7 +9,7 @@ function AppLayout() {
         <Box>
             <Header/>
             <Stack marginTop={2} gap={2} overflow={"auto"}>
-                <ParentCategoryBar/>
+                <GlobalNavBar/>
                 <Outlet/>
             </Stack>
         </Box>

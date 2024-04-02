@@ -1,10 +1,10 @@
 import {useQuery} from "@tanstack/react-query";
 import {getAllSubCategoryUnderAllParentCategory} from "../../services/parent-category/parentCategoryService.js";
 import {Box, styled, Typography} from "@mui/material";
-import ParentSubCategoryGrid from "./ParentSubCategoryGrid.jsx";
 import {toTitleCase} from "../../utilities/util.jsx";
+import NamePriceImageCard from "./NamePriceImageCard.jsx";
 
-const StyledParentContainerBox = styled(Box)(({theme}) => ({
+const StyledSubCategoryByParentBox = styled(Box)(({theme}) => ({
     margin: "auto",
     width: "100%",
     backgroundColor: theme.palette.grey["100"],
@@ -26,7 +26,7 @@ const StyledParentContainerBox = styled(Box)(({theme}) => ({
     },
 }))
 
-const StyledParentSubCategoryBarBox = styled(Box)(({theme}) => ({
+const StyledSubCategoryByParentBarBox = styled(Box)(({theme}) => ({
     margin: "auto",
     width: "100%",
     backgroundColor: theme.palette.grey["100"],
@@ -44,29 +44,33 @@ const StyledParentSubCategoryBarBox = styled(Box)(({theme}) => ({
     },
 }));
 
-function ParentSubCategoryContainer() {
+function SubCategoryByParentContainer() {
 
     const {isLoading, data, error} = useQuery({
         queryKey: ["parentSubCategories"],
         queryFn: getAllSubCategoryUnderAllParentCategory
     });
 
-    console.log(data);
-
     return (
         <>
             {!isLoading && !error && Object.entries(data).map(([key, value]) =>
-                <StyledParentContainerBox key={key}>
+                <StyledSubCategoryByParentBox key={key}>
                     <Typography variant={"h6"}>
                         Best of {toTitleCase(key)}
                     </Typography>
-                    <StyledParentSubCategoryBarBox>
-                        <ParentSubCategoryGrid categoryKey={key} categoryValue={value}/>
-                    </StyledParentSubCategoryBarBox>
-                </StyledParentContainerBox>
+                    <StyledSubCategoryByParentBarBox>
+                        {
+                            value.subCategories.map(category =>
+                                <NamePriceImageCard
+                                    key={`${key}-${category.name}`}
+                                    data={category}/>
+                            )
+                        }
+                    </StyledSubCategoryByParentBarBox>
+                </StyledSubCategoryByParentBox>
             )}
         </>
     );
 }
 
-export default ParentSubCategoryContainer;
+export default SubCategoryByParentContainer;

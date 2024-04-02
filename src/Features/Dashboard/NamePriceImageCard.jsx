@@ -1,7 +1,7 @@
 import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
 import {toTitleCase} from "../../utilities/util.jsx";
 
-function CardWithImageAndDescriptionOnly({data}) {
+function NamePriceImageCard({data}) {
     return (
         <Box>
             <Card sx={{minWidth: "150px"}}>
@@ -26,4 +26,4 @@ function CardWithImageAndDescriptionOnly({data}) {
     );
 }
 
-export default CardWithImageAndDescriptionOnly;
+export default NamePriceImageCard;

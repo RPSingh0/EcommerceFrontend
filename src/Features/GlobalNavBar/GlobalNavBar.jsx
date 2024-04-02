@@ -1,5 +1,5 @@
 import {Box, styled} from "@mui/material";
-import ParentCategoryContainer from "./ParentCategoryContainer.jsx";
+import GlobalNavBarContainer from "./GlobalNavBarContainer.jsx";
 
 const StyledParentCategoryBarBox = styled(Box)(({theme}) => ({
     margin: "auto",
@@ -16,12 +16,12 @@ const StyledParentCategoryBarBox = styled(Box)(({theme}) => ({
     }
 }));
 
-function ParentCategoryBar() {
+function GlobalNavBar() {
     return (
         <StyledParentCategoryBarBox>
-            <ParentCategoryContainer/>
+            <GlobalNavBarContainer/>
         </StyledParentCategoryBarBox>
     );
 }
 
-export default ParentCategoryBar;
+export default GlobalNavBar;

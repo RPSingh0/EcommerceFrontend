@@ -1,7 +1,9 @@
 import {useQuery} from "@tanstack/react-query";
 import {getAllParentCategory} from "../../services/parent-category/parentCategoryService.js";
-import ParentCategory from "./ParentCategory.jsx";
+import GlobalNavBarNavElement from "./GlobalNavBarNavElement.jsx";
 import {Box, Divider, styled} from "@mui/material";
+import {NavLink} from "react-router-dom";
+import React from 'react';
 
 const StyledParentCategoryContainerBox = styled(Box)(({theme}) => ({
     display: "flex",
@@ -15,10 +17,13 @@ const StyledParentCategoryContainerBox = styled(Box)(({theme}) => ({
     },
     "hr:last-of-type": {
         display: "none"
+    },
+    "& a.active": {
+        textDecoration: "underline !important",
     }
 }))
 
-function ParentCategoryContainer() {
+function GlobalNavBarContainer() {
 
     const {isLoading, data, error} = useQuery({
         queryKey: ["parentCategories"],
@@ -28,13 +33,15 @@ function ParentCategoryContainer() {
     return (
         <StyledParentCategoryContainerBox>
             {!isLoading && !error && data.data.parentCategories.map(item =>
-                <Box key={item._id} >
-                    <ParentCategory category={item.name}/>
+                <React.Fragment key={item.name}>
+                    <NavLink to={`/by/parent/${item.name}`} style={{textDecoration: "none"}}>
+                        <GlobalNavBarNavElement category={item.name}/>
+                    </NavLink>
                     <Divider orientation={"vertical"} flexItem/>
-                </Box>
+                </React.Fragment>
             )}
         </StyledParentCategoryContainerBox>
     );
 }
 
-export default ParentCategoryContainer;
+export default GlobalNavBarContainer;
