@@ -1,7 +1,6 @@
 import Header from "../../Features/Header/Header.jsx";
 import {Box, Stack} from "@mui/material";
 import GlobalNavBar from "../../Features/GlobalNavBar/GlobalNavBar.jsx";
-import SubCategoryByParentContainer from "../../Features/Dashboard/SubCategoryByParentContainer.jsx";
 import {Outlet} from "react-router-dom";
 
 function AppLayout() {

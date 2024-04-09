@@ -1,5 +1,6 @@
 import {Box, Card, CardActionArea, CardContent, CardMedia, styled, Typography} from "@mui/material";
 import {toTitleCase} from "../../utilities/util.jsx";
+import {NavLink, useLocation} from "react-router-dom";
 
 const StyledCardMedia = styled(CardMedia)(({theme}) => ({
 
@@ -30,8 +31,11 @@ const StyledCardMedia = styled(CardMedia)(({theme}) => ({
 }));
 
 function ImageNamePriceSingleSubCategoryByParentCard({data}) {
+
+    const {pathname} = useLocation();
+
     return (
-        <Box>
+        <NavLink to={`${pathname}/${data.name}`} style={{textDecoration: "none"}}>
             <CardActionArea>
                 <Card>
                     <StyledCardMedia
@@ -49,7 +53,7 @@ function ImageNamePriceSingleSubCategoryByParentCard({data}) {
                     </CardContent>
                 </Card>
             </CardActionArea>
-        </Box>
+        </NavLink>
     );
 }
 

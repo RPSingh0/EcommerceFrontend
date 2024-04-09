@@ -1,9 +1,11 @@
-import {Box, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
+import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
 import {toTitleCase} from "../../utilities/util.jsx";
+import {NavLink} from "react-router-dom";
 
-function NamePriceImageDashboardCard({data}) {
+function NamePriceImageDashboardCard({parentCategory, data}) {
+
     return (
-        <Box>
+        <NavLink to={`/home/by/parent/${parentCategory}/${data.name}`} style={{textDecoration: "none"}}>
             <Card sx={{minWidth: "150px", maxWidth: "150px"}}>
                 <CardActionArea>
                     <CardMedia
@@ -22,7 +24,7 @@ function NamePriceImageDashboardCard({data}) {
                     </CardContent>
                 </CardActionArea>
             </Card>
-        </Box>
+        </NavLink>
     );
 }
 

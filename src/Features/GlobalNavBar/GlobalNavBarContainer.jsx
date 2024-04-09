@@ -34,7 +34,7 @@ function GlobalNavBarContainer() {
         <StyledParentCategoryContainerBox>
             {!isLoading && !error && data.data.parentCategories.map(item =>
                 <React.Fragment key={item.name}>
-                    <NavLink to={`/by/parent/${item.name}`} style={{textDecoration: "none"}}>
+                    <NavLink to={`/home/by/parent/${item.name}`} style={{textDecoration: "none"}}>
                         <GlobalNavBarNavElement category={item.name}/>
                     </NavLink>
                     <Divider orientation={"vertical"} flexItem/>
