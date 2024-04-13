@@ -5,6 +5,9 @@ import {Box, Divider, styled} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {getProductByProductId} from "../../services/product/productService.js";
+import ProductDescription from "./ProductDescription.jsx";
+import SimilarProductsInfo from "./SimilarProductsInfo.jsx";
+import ProductReviews from "./ProductReviews.jsx";
 
 const StyledSingleProductImageAndInfoContainer = styled(Box)(({theme}) => ({
     display: "grid",
@@ -28,18 +31,24 @@ function SingleProduct() {
         queryFn: () => getProductByProductId(productId)
     });
 
+    //todo useEffect
+    //todo render flag
+
     return (
         <StyledSingleProductContainer>
-            <StyledSingleProductImageAndInfoContainer>
-                {!isLoading && !error &&
-                    <>
-                        <SingleProductProductImagesCarousel name={data.data.name}
-                                                            imagesList={data.data.product.productImages}/>
-                        <SingleProductProductInfo productInfo={data.data.product}/>
-                    </>
-                }
-            </StyledSingleProductImageAndInfoContainer>
+            {!isLoading && !error &&
+                <StyledSingleProductImageAndInfoContainer>
+                    <SingleProductProductImagesCarousel name={data.data.name}
+                                                        imagesList={data.data.product.productImages}/>
+                    <SingleProductProductInfo productInfo={data.data.product}/>
+                </StyledSingleProductImageAndInfoContainer>
+            }
             <Divider/>
+            <ProductDescription/>
+            <Divider/>
+            <SimilarProductsInfo/>
+            <Divider/>
+            <ProductReviews/>
         </StyledSingleProductContainer>
     );
 }

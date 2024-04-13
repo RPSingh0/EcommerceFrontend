@@ -45,11 +45,13 @@ function ProductBySubCategoryCardKeywords({keywords, itemId}) {
 
 function SingleProductProductInfo({productInfo}) {
     return (
-        <Box>
+        <Box sx={{height: "100%"}}>
             <Box sx={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.5rem",
+                gap: "1rem",
+                justifyContent: "space-between",
+                height: "100%"
             }}>
                 <Typography variant={"h6"}>
                     {productInfo.name}
@@ -70,11 +72,8 @@ function SingleProductProductInfo({productInfo}) {
                     </Typography>
                 </Box>
                 <ProductBySubCategoryCardKeywords keywords={productInfo.keywords} itemId={productInfo._id}/>
-                <Divider/>
                 <BuyNowAddToCart/>
-                <Divider/>
                 <ProductShipping/>
-                <Divider/>
             </Box>
         </Box>
     )
