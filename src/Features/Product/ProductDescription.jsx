@@ -1,9 +1,20 @@
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
+import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
+import {StyledSingleProductInformationTypographyHeadings} from "../Ui/RStyledComponents.jsx";
 
 function ProductDescription() {
+
+    const {isLoading, data, error} = useSingleProductContext();
+    const productDescription = data?.data?.product.description;
+
     return (
         <Box>
-            Product Description
+            <StyledSingleProductInformationTypographyHeadings variant={"subtitle2"}>
+                Description
+            </StyledSingleProductInformationTypographyHeadings>
+            <Typography variant={"caption"}>
+                {productDescription}
+            </Typography>
         </Box>
     );
 }

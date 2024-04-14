@@ -1,6 +1,7 @@
 import {Box, Divider, Rating, styled, Tooltip, Typography, Zoom} from "@mui/material";
 import ProductShipping from "./ProductShipping.jsx";
 import BuyNowAddToCart from "./BuyNowAddToCart.jsx";
+import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
 
 const StyledKeywordsBox = styled(Box)(() => ({
     display: "flex",
@@ -11,9 +12,7 @@ const StyledKeywordsBox = styled(Box)(() => ({
 }));
 
 const StyledSingleKeywordContainer = styled("ul")(() => ({
-    // border: "1px solid black",
     padding: "0.1rem 0.2rem",
-    width: "max-content"
 }));
 
 function ProductBySubCategoryCardRating() {
@@ -43,9 +42,14 @@ function ProductBySubCategoryCardKeywords({keywords, itemId}) {
     );
 }
 
-function SingleProductProductInfo({productInfo}) {
+function SingleProductProductInfo() {
+
+    const {isLoading, data, error} = useSingleProductContext();
+    const productInfo = data?.data?.product;
+
     return (
         <Box sx={{height: "100%"}}>
+            {!isLoading && !error &&
             <Box sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -73,8 +77,11 @@ function SingleProductProductInfo({productInfo}) {
                 </Box>
                 <ProductBySubCategoryCardKeywords keywords={productInfo.keywords} itemId={productInfo._id}/>
                 <BuyNowAddToCart/>
+                <Divider/>
                 <ProductShipping/>
+                <Divider/>
             </Box>
+            }
         </Box>
     )
 }

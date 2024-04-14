@@ -2,18 +2,17 @@ import SingleProductProductImagesCarousel from "./SingleProductProductImagesCrou
 import {StyledSingleProductContainer} from "../Ui/RStyledComponents.jsx";
 import SingleProductProductInfo from "./SingleProductProductInfo.jsx";
 import {Box, Divider, styled} from "@mui/material";
-import {useParams} from "react-router-dom";
-import {useQuery} from "@tanstack/react-query";
-import {getProductByProductId} from "../../services/product/productService.js";
 import ProductDescription from "./ProductDescription.jsx";
 import SimilarProductsInfo from "./SimilarProductsInfo.jsx";
 import ProductReviews from "./ProductReviews.jsx";
+import {SingleProductContextProvider} from "../../Contexts/SingleProductContext.jsx";
 
 const StyledSingleProductImageAndInfoContainer = styled(Box)(({theme}) => ({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     columnGap: "1rem",
-    padding: "1rem",
+
+    paddingBottom: "0",
 
     [theme.breakpoints.down("md")]: {
         display: "flex",
@@ -23,33 +22,20 @@ const StyledSingleProductImageAndInfoContainer = styled(Box)(({theme}) => ({
 }))
 
 function SingleProduct() {
-
-    const {productId} = useParams();
-
-    const {isLoading, data, error} = useQuery({
-        queryKey: [`product-${productId}`],
-        queryFn: () => getProductByProductId(productId)
-    });
-
-    //todo useEffect
-    //todo render flag
-
     return (
-        <StyledSingleProductContainer>
-            {!isLoading && !error &&
+        <SingleProductContextProvider>
+            <StyledSingleProductContainer>
                 <StyledSingleProductImageAndInfoContainer>
-                    <SingleProductProductImagesCarousel name={data.data.name}
-                                                        imagesList={data.data.product.productImages}/>
-                    <SingleProductProductInfo productInfo={data.data.product}/>
+                    <SingleProductProductImagesCarousel/>
+                    <SingleProductProductInfo/>
                 </StyledSingleProductImageAndInfoContainer>
-            }
-            <Divider/>
-            <ProductDescription/>
-            <Divider/>
-            <SimilarProductsInfo/>
-            <Divider/>
-            <ProductReviews/>
-        </StyledSingleProductContainer>
+                <ProductDescription/>
+                <Divider/>
+                <SimilarProductsInfo/>
+                <Divider/>
+                <ProductReviews/>
+            </StyledSingleProductContainer>
+        </SingleProductContextProvider>
     );
 }
 

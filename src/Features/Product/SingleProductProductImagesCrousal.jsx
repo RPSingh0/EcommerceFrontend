@@ -1,6 +1,7 @@
 import {Box, IconButton, MobileStepper, Paper, styled} from "@mui/material";
 import {useEffect, useState} from "react";
 import {ArrowBack, ArrowForward} from "@mui/icons-material";
+import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
 
 
 const StyledLeftButton = styled(IconButton)(({theme}) => ({
@@ -29,12 +30,16 @@ const StyledMobileStepper = styled(MobileStepper)(() => ({
     background: "none"
 }));
 
-function SingleProductProductImagesCarousel({name, imagesList}) {
+function SingleProductProductImagesCarousel() {
+
+    const {isLoading, data, error} = useSingleProductContext();
+    const name = data?.data?.name;
+    const imagesList = data?.data?.product?.productImages;
     const [activeStep, setActiveStep] = useState(0);
-    const maxSteps = imagesList.length;
+    const maxSteps = imagesList?.length;
 
     const preloadImages = () => {
-        imagesList.forEach((url) => {
+        imagesList?.forEach((url) => {
             const img = new Image();
             img.src = url;
         });
@@ -42,7 +47,7 @@ function SingleProductProductImagesCarousel({name, imagesList}) {
 
     useEffect(() => {
         preloadImages();
-    }, []);
+    }, [imagesList]);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep === maxSteps - 1 ? 0 : prevActiveStep + 1);
@@ -59,28 +64,30 @@ function SingleProductProductImagesCarousel({name, imagesList}) {
             overflow: "hidden",
             height: "50dvh"
         }}>
-            <Box sx={{overflow: "hidden", position: "relative", width: "100%", height: "100%"}}>
-                <StyledLeftButton size="small" onClick={handleBack} disableRipple>
-                    <ArrowBack/>
-                </StyledLeftButton>
-                <StyledRightButton size="small" onClick={handleNext} disableRipple>
-                    <ArrowForward/>
-                </StyledRightButton>
-                <StyledMobileStepper
-                    variant="dots"
-                    steps={maxSteps}
-                    position="static"
-                    activeStep={activeStep}
-                    backButton={<></>}
-                    nextButton={<></>}
-                />
-                <img src={imagesList[activeStep]}
-                     alt={`${name}-image-${activeStep + 1}`}
-                     height={"100%"}
-                     width={"100%"}
-                     style={{objectFit: "contain"}}
-                />
-            </Box>
+            {!isLoading && !error &&
+                <Box sx={{overflow: "hidden", position: "relative", width: "100%", height: "100%"}}>
+                    <StyledLeftButton size="small" onClick={handleBack} disableRipple>
+                        <ArrowBack/>
+                    </StyledLeftButton>
+                    <StyledRightButton size="small" onClick={handleNext} disableRipple>
+                        <ArrowForward/>
+                    </StyledRightButton>
+                    <StyledMobileStepper
+                        variant="dots"
+                        steps={maxSteps}
+                        position="static"
+                        activeStep={activeStep}
+                        backButton={<></>}
+                        nextButton={<></>}
+                    />
+                    <img src={imagesList[activeStep]}
+                         alt={`${name}-image-${activeStep + 1}`}
+                         height={"100%"}
+                         width={"100%"}
+                         style={{objectFit: "contain"}}
+                    />
+                </Box>
+            }
         </Paper>
     );
 }

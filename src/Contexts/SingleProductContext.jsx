@@ -1,10 +1,18 @@
 import {createContext, useContext} from "react";
+import {useParams} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import {getProductByProductId} from "../services/product/productService.js";
 
 const SingleProductContext = createContext();
 
 function SingleProductContextProvider({children}) {
 
-    
+    const {productId} = useParams();
+
+    const {isLoading, data, error} = useQuery({
+        queryKey: [`product-${productId}`],
+        queryFn: () => getProductByProductId(productId)
+    });
 
     return (
         <SingleProductContext.Provider value={{

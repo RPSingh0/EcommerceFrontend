@@ -1,4 +1,4 @@
-import {Box, styled} from "@mui/material";
+import {Box, styled, Typography} from "@mui/material";
 
 export const StyledMainContentDashboard = styled(Box)(({theme}) => ({
     margin: "auto",
@@ -53,4 +53,10 @@ export const StyledSingleProductContainer = styled(Box)(({theme}) => ({
     "&::-webkit-scrollbar": {
         display: "none"
     },
+}));
+
+export const StyledSingleProductInformationTypographyHeadings = styled(Typography)(({theme}) => ({
+    [theme.breakpoints.up("md")]: {
+        fontSize: "1rem"
+    }
 }));

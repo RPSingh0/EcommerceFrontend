@@ -1,9 +1,12 @@
 import {Box} from "@mui/material";
+import {StyledSingleProductInformationTypographyHeadings} from "../Ui/RStyledComponents.jsx";
 
 function ProductReviews() {
     return (
         <Box>
-            Product Reviews
+            <StyledSingleProductInformationTypographyHeadings variant={"subtitle2"}>
+                Product Reviews
+            </StyledSingleProductInformationTypographyHeadings>
         </Box>
     );
 }
