@@ -4,8 +4,8 @@ import {StyledSingleProductInformationTypographyHeadings} from "../Ui/RStyledCom
 
 function ProductDescription() {
 
-    const {isLoading, data, error} = useSingleProductContext();
-    const productDescription = data?.data?.product.description;
+    const {isLoadingProductDetails, singleProductData, singleProductError} = useSingleProductContext();
+    const productDescription = singleProductData?.data?.product.description;
 
     return (
         <Box>

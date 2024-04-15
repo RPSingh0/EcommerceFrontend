@@ -44,12 +44,12 @@ function ProductBySubCategoryCardKeywords({keywords, itemId}) {
 
 function SingleProductProductInfo() {
 
-    const {isLoading, data, error} = useSingleProductContext();
-    const productInfo = data?.data?.product;
+    const {isLoadingProductDetails, singleProductData, singleProductError} = useSingleProductContext();
+    const productInfo = singleProductData?.data?.product;
 
     return (
         <Box sx={{height: "100%"}}>
-            {!isLoading && !error &&
+            {!isLoadingProductDetails && !singleProductError &&
             <Box sx={{
                 display: "flex",
                 flexDirection: "column",

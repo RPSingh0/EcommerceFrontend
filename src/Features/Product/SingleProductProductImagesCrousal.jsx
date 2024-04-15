@@ -32,9 +32,9 @@ const StyledMobileStepper = styled(MobileStepper)(() => ({
 
 function SingleProductProductImagesCarousel() {
 
-    const {isLoading, data, error} = useSingleProductContext();
-    const name = data?.data?.name;
-    const imagesList = data?.data?.product?.productImages;
+    const {isLoadingProductDetails, singleProductData, singleProductError} = useSingleProductContext();
+    const name = singleProductData?.data?.name;
+    const imagesList = singleProductData?.data?.product?.productImages;
     const [activeStep, setActiveStep] = useState(0);
     const maxSteps = imagesList?.length;
 
@@ -64,7 +64,7 @@ function SingleProductProductImagesCarousel() {
             overflow: "hidden",
             height: "50dvh"
         }}>
-            {!isLoading && !error &&
+            {!isLoadingProductDetails && !singleProductError &&
                 <Box sx={{overflow: "hidden", position: "relative", width: "100%", height: "100%"}}>
                     <StyledLeftButton size="small" onClick={handleBack} disableRipple>
                         <ArrowBack/>

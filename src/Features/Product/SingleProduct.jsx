@@ -11,7 +11,8 @@ const StyledSingleProductImageAndInfoContainer = styled(Box)(({theme}) => ({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     columnGap: "1rem",
-
+    // display: "flex",
+    // background: theme.palette.secondary.main,
     paddingBottom: "0",
 
     [theme.breakpoints.down("md")]: {
