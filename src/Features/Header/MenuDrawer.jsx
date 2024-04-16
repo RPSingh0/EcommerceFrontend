@@ -1,5 +1,6 @@
 import {Box, Button, Drawer} from "@mui/material";
 import HeaderUser from "./HeaderUser.jsx";
+import {Link} from "react-router-dom";
 
 function MenuDrawer({isOpen, toggleHeader}) {
     return (
@@ -11,12 +12,16 @@ function MenuDrawer({isOpen, toggleHeader}) {
             <Box sx={{display: "flex", flexDirection: "column", gap: "1rem", padding: "1rem"}}>
                 <HeaderUser/>
                 <Box sx={{display: "flex", flexDirection: "row", gap: "1rem"}}>
-                    <Button variant={"outlined"}>
-                        Login
-                    </Button>
-                    <Button variant={"outlined"}>
-                        Signup
-                    </Button>
+                    <Link to={"/login"} onClick={() => toggleHeader(false)}>
+                        <Button variant={"outlined"}>
+                            Login
+                        </Button>
+                    </Link>
+                    <Link to={"/signup"} onClick={() => toggleHeader(false)}>
+                        <Button variant={"outlined"}>
+                            Signup
+                        </Button>
+                    </Link>
                 </Box>
             </Box>
         </Drawer>

@@ -7,6 +7,7 @@ import PageNotFound from "./Features/404NotFound/PageNotFound.jsx";
 import SingleSubCategoryByParentContainer from "./Features/Dashboard/SingleSubCategoryByParentContainer.jsx";
 import ProductsBySubCategory from "./Features/ProductsDashboard/ProductsBySubCategory.jsx";
 import SingleProduct from "./Features/Product/SingleProduct.jsx";
+import Signup from "./Features/Authentication/Signup.jsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -19,7 +20,7 @@ const queryClient = new QueryClient({
 export default function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false}/>
+            {/*<ReactQueryDevtools initialIsOpen={false}/>*/}
             <BrowserRouter>
                 <Routes>
                     <Route element={<AppLayout/>}>
@@ -34,6 +35,7 @@ export default function App() {
                                 </Route>
                             </Route>
                         </Route>
+                        <Route path={"login"} element={<Signup/>}/>
                         <Route path={"*"} element={<PageNotFound/>}/>
                     </Route>
                 </Routes>

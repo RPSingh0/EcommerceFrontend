@@ -61,3 +61,13 @@ export const StyledSingleProductInformationTypographyHeadings = styled(Typograph
         fontSize: "1rem"
     }
 }));
+
+export const StyledSignupLoginBox = styled(Box)(() => ({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "1rem",
+    width: "100%",
+    marginTop: "2rem",
+    marginBottom: "2rem"
+}));
