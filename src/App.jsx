@@ -1,5 +1,4 @@
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import AppLayout from "./components/AppLayout/AppLayout.jsx";
 import SubCategoryByParentContainer from "./Features/Dashboard/SubCategoryByParentContainer.jsx";
@@ -8,6 +7,7 @@ import SingleSubCategoryByParentContainer from "./Features/Dashboard/SingleSubCa
 import ProductsBySubCategory from "./Features/ProductsDashboard/ProductsBySubCategory.jsx";
 import SingleProduct from "./Features/Product/SingleProduct.jsx";
 import Signup from "./Features/Authentication/Signup.jsx";
+import Login from "./Features/Authentication/Login.jsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -35,7 +35,8 @@ export default function App() {
                                 </Route>
                             </Route>
                         </Route>
-                        <Route path={"login"} element={<Signup/>}/>
+                        <Route path={"signup"} element={<Signup/>}/>
+                        <Route path={"login"} element={<Login/>}/>
                         <Route path={"*"} element={<PageNotFound/>}/>
                     </Route>
                 </Routes>

@@ -1,10 +1,18 @@
 import {Avatar, Box, Button, styled, Typography} from "@mui/material";
-import {blue, purple} from "@mui/material/colors";
+import {blue} from "@mui/material/colors";
 import {LockOutlined} from "@mui/icons-material";
-import {MultilineTextFieldWithController, TextFieldWithController} from "../Forms/FormFields.jsx";
+import {
+    InputFileUploadSingleImage,
+    MultilineTextFieldWithController,
+    TextFieldWithController
+} from "../Forms/FormFields.jsx";
 import {useForm} from "react-hook-form";
 import {StyledSignupLoginBox} from "../Ui/RStyledComponents.jsx";
 import {NavLink} from "react-router-dom";
+import {useState} from "react";
+import {v4} from "uuid";
+import {uploadImageAndGetDownloadUrl} from "../../services/firebase/imgageUploadService.js";
+import {useCreateUser} from "./useCreateUser.js";
 
 const StyledAvatarAndDescBox = styled(Box)(() => ({
     display: "flex",
@@ -38,9 +46,40 @@ const StyledSignupForm = styled(Box)(({theme}) => ({
 function Signup() {
 
     const {control, handleSubmit, reset, formState: {errors}} = useForm();
+    const [userImage, setUserImage] = useState("");
+    const {isCreating, createUser} = useCreateUser();
 
-    function onSubmit() {
+    async function onSubmit(data) {
 
+        let userImageUrl = null;
+
+        if (data.userImage) {
+            try {
+                const path = v4();
+                userImageUrl = await uploadImageAndGetDownloadUrl('user', `${path}-${data.firstName}/profile`, userImage);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        createUser({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            password: data.password,
+            confirmPassword: data.confirmPassword,
+            address: data.address,
+            mobileNumber: data.mobileNumber,
+            userImage: userImageUrl?.[0]
+        }, {
+            onSuccess: () => {
+                setUserImage("");
+                reset();
+            },
+            onError: (error) => {
+                console.log(error.message);
+            }
+        })
     }
 
     function onError() {
@@ -65,6 +104,7 @@ function Signup() {
                         name={"firstName"}
                         label={"First Name"}
                         defaultValue={""}
+                        disabled={isCreating}
                         requiredMessage={"Please provide a user first name"}
                         error={!!errors.firstName}
                         helperText={errors.firstName?.message}
@@ -75,6 +115,8 @@ function Signup() {
                         name={"lastName"}
                         label={"Last Name"}
                         defaultValue={""}
+                        disabled={isCreating}
+                        required={false}
                         requiredMessage={"Please provide a user last name"}
                         error={!!errors.lastName}
                         helperText={errors.lastName?.message}
@@ -87,6 +129,7 @@ function Signup() {
                     label={"Email"}
                     type={"email"}
                     defaultValue={""}
+                    disabled={isCreating}
                     requiredMessage={"Please provide a user email"}
                     error={!!errors.email}
                     helperText={errors.email?.message}
@@ -98,6 +141,7 @@ function Signup() {
                     label={"Password"}
                     type={"password"}
                     defaultValue={""}
+                    disabled={isCreating}
                     requiredMessage={"Please provide a user password"}
                     error={!!errors.password}
                     helperText={errors.password?.message}
@@ -109,6 +153,7 @@ function Signup() {
                     label={"Confirm Password"}
                     type={"password"}
                     defaultValue={""}
+                    disabled={isCreating}
                     requiredMessage={"Please confirm your password"}
                     error={!!errors.confirmPassword}
                     helperText={errors.confirmPassword?.message}
@@ -120,7 +165,8 @@ function Signup() {
                     label={"Address"}
                     rows={4}
                     defaultValue={""}
-                    requiredMessage={"Please enter your message"}
+                    disabled={isCreating}
+                    requiredMessage={"Please enter your address"}
                     error={!!errors.address}
                     helperText={errors.address?.message}
                 />
@@ -131,14 +177,26 @@ function Signup() {
                     label={"Phone Number"}
                     type={"mobileNumber"}
                     defaultValue={""}
+                    disabled={isCreating}
                     requiredMessage={"Please enter your phone number"}
                     error={!!errors.mobileNumber}
                     helperText={errors.mobileNumber?.message}
                 />
-                <Button variant={"contained"}>
+                <InputFileUploadSingleImage
+                    control={control}
+                    id={"userImage"}
+                    name={"userImage"}
+                    label={"Profile Picture"}
+                    image={userImage}
+                    setImage={setUserImage}
+                    disabled={isCreating}
+                    error={!!errors.userImage}
+                    helperText={errors.userImage?.message}
+                />
+                <Button variant={"contained"} type={"submit"} disabled={isCreating}>
                     Create Account
                 </Button>
-                <NavLink to={"/signup"} style={{textDecoration: "none", textAlign: "end"}}>
+                <NavLink to={"/signin"} style={{textDecoration: "none", textAlign: "end"}}>
                     <Typography variant={"caption"}>
                         Already have an account? Sign in here!
                     </Typography>

@@ -1,5 +1,20 @@
 import {Controller} from "react-hook-form";
-import {FormControl, TextField} from "@mui/material";
+import {FormControl, Paper, styled, TextField, Typography} from "@mui/material";
+import {Circle} from "@mui/icons-material";
+
+const StyledFormControlFilePicker = styled(FormControl)(() => ({
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem"
+}));
+
+const StyledSelectedFilePaper = styled(Paper)(() => ({
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.4rem",
+    padding: "0.4rem 0.8rem",
+    overflow: "auto"
+}))
 
 export function TextFieldWithController({
     control,
@@ -8,6 +23,7 @@ export function TextFieldWithController({
     label,
     type = "text",
     defaultValue,
+    required = true,
     requiredMessage,
     disabled,
     error,
@@ -20,7 +36,7 @@ export function TextFieldWithController({
             control={control}
             defaultValue={defaultValue}
             rules={{
-                required: requiredMessage
+                required: required ? requiredMessage : false
             }}
             render={({field}) => (
                 <FormControl fullWidth>
@@ -76,6 +92,52 @@ export function MultilineTextFieldWithController({
                         helperText={helperText}
                     />
                 </FormControl>
+            )}/>
+    );
+}
+
+export function InputFileUploadSingleImage({
+    control, image, setImage, name, id, label, disabled, error, helperText
+}) {
+    const handleInputChange = (event) => {
+        const files = event.target.files;
+        setImage(Array.from(files));
+    };
+
+    return (
+        <Controller
+            name={name}
+            control={control}
+            defaultValue={image}
+            render={({field}) => (
+                <StyledFormControlFilePicker>
+                    <TextField
+                        {...field}
+                        id={id}
+                        name={name}
+                        variant={"outlined"}
+                        type={"file"}
+                        label={label}
+                        onChange={(event) => {
+                            field.onChange(event);
+                            handleInputChange(event);
+                        }}
+                        disabled={disabled}
+                        error={error}
+                        helperText={helperText}
+                        InputLabelProps={{
+                            shrink: true
+                        }}
+                    />
+                    {image.length > 0 &&
+                        <StyledSelectedFilePaper>
+                            {image.map(f =>
+                                <Typography variant={"subtitle2"} noWrap key={f.name}>
+                                    <Circle sx={{height: 10}}/> {f.name}
+                                </Typography>)}
+                        </StyledSelectedFilePaper>
+                    }
+                </StyledFormControlFilePicker>
             )}/>
     );
 }
