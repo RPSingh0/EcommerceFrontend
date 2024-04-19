@@ -13,10 +13,14 @@ const authStatusSlice = createSlice({
             state.email = action.payload.email;
             state.token = action.payload.token;
         },
+        removeAuthStatus(state) {
+            state.email = null;
+            state.token = null;
+        }
     }
 });
 
 export const getAuthStatus = state => state.authStatus;
 
-export const {setAuthStatus} = authStatusSlice.actions;
+export const {setAuthStatus, removeAuthStatus} = authStatusSlice.actions;
 export default authStatusSlice.reducer;

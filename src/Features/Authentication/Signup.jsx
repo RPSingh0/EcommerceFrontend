@@ -8,7 +8,7 @@ import {
 } from "../Forms/FormFields.jsx";
 import {useForm} from "react-hook-form";
 import {StyledSignupLoginBox} from "../Ui/RStyledComponents.jsx";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {v4} from "uuid";
 import {uploadImageAndGetDownloadUrl} from "../../services/firebase/imgageUploadService.js";
@@ -48,6 +48,7 @@ function Signup() {
     const {control, handleSubmit, reset, formState: {errors}} = useForm();
     const [userImage, setUserImage] = useState("");
     const {isCreating, createUser} = useCreateUser();
+    const navigate = useNavigate();
 
     async function onSubmit(data) {
 
@@ -75,6 +76,7 @@ function Signup() {
             onSuccess: () => {
                 setUserImage("");
                 reset();
+                navigate("/");
             },
             onError: (error) => {
                 console.log(error.message);

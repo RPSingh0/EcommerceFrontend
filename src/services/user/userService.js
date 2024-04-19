@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'http://192.168.130.13:3000/api/v1/user';
+const URL = 'http://localhost:3000/api/v1/user';
 
 export async function signupUserService({
     firstName, lastName, email, password, confirmPassword, address, mobileNumber, userImage
@@ -14,8 +14,6 @@ export async function signupUserService({
         address: address,
         mobile: mobileNumber,
         userImage: userImage
-    }, {
-        withCredentials: true
     });
 
     if (status !== 201) {
@@ -31,8 +29,6 @@ export async function loginUserService({
     let {status, data} = await axios.post(`${URL}/login`, {
         email: email,
         password: password
-    }, {
-        withCredentials: true
     });
 
     if (status !== 200) {

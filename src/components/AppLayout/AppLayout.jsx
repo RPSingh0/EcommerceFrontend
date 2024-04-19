@@ -12,7 +12,7 @@ function AppLayout() {
     const {loginUser} = useLoginWithToken();
 
     useEffect(() => {
-        if (authStatus) {
+        if (authStatus && authStatus.email && authStatus.token) {
             loginUser({
                 email: authStatus.email,
                 token: authStatus.token
