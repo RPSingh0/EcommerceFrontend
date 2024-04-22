@@ -1,5 +1,7 @@
 import {Badge, Box, styled, Typography} from "@mui/material";
 import {ShoppingCart} from "@mui/icons-material";
+import {useSelector} from "react-redux";
+import {getNumberOfItemsInCart} from "../../services/user/userSlice.js";
 
 const StyledHeaderCart = styled(Box)(() => ({
     display: "flex",
@@ -10,9 +12,12 @@ const StyledHeaderCart = styled(Box)(() => ({
 }))
 
 function HeaderCart() {
+
+    const items = useSelector(getNumberOfItemsInCart);
+
     return (
         <StyledHeaderCart>
-            <Badge badgeContent={7} color={"error"} variant={"standard"}>
+            <Badge badgeContent={items} color={"error"} variant={"standard"}>
                 <ShoppingCart/>
             </Badge>
             <Typography

@@ -1,7 +1,7 @@
 import {Box, styled, Typography} from "@mui/material";
 import {parentCategoryToIconMap, toTitleCase} from "../../utilities/util.jsx";
 
-const StyledParentCategoryBox = styled(Box)(({theme}) => ({
+const StyledParentCategoryBox = styled(Box)(() => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

@@ -1,6 +1,12 @@
-import {Box, Button, ButtonGroup, Divider, IconButton, styled, Typography} from "@mui/material";
+import {Box, Button, ButtonGroup, styled, Typography} from "@mui/material";
 import {Add, AddShoppingCart, Remove, ShoppingBag} from "@mui/icons-material";
 import {useState} from "react";
+import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
+import {useSelector} from "react-redux";
+import {isUserLoggedIn} from "../../services/user/userSlice.js";
+import toast from "react-hot-toast";
+import {useUpdateCart} from "../cart/useUpdateCart.js";
+import {getAuthToken} from "../../services/user/authStatusSlice.js";
 
 const StyledAddToCartAndBuyNowParentBox = styled(Box)(({theme}) => ({
     display: "flex",
@@ -41,6 +47,10 @@ const StyledButtonTypography = styled(Typography)(({theme}) => ({
 function BuyNowAddToCart() {
 
     const [quantity, setQuantity] = useState(1);
+    const {singleProductData: {data: {product: {_id}}}} = useSingleProductContext();
+    const isLoggedIn = useSelector(isUserLoggedIn);
+    const authToken = useSelector(getAuthToken);
+    const {isCreating: isAdding, updateCart} = useUpdateCart();
 
     function increaseQuantity() {
         setQuantity(val => val + 1);
@@ -48,6 +58,25 @@ function BuyNowAddToCart() {
 
     function decreaseQuantity() {
         setQuantity(val => val === 1 ? 1 : val - 1)
+    }
+
+    function handleAddToCart() {
+        if (!isLoggedIn) {
+            toast.error("Please log in to add");
+        } else {
+            updateCart({
+                identifier: _id,
+                quantity: quantity,
+                token: authToken
+            }, {
+                onSuccess: () => {
+                    toast.success("Item added to cart")
+                },
+                onError: (error) => {
+                    console.log(error)
+                }
+            })
+        }
     }
 
     return (
@@ -59,10 +88,13 @@ function BuyNowAddToCart() {
                 <Button disableRipple>
                     {quantity}
                 </Button>
-                <Button onClick={decreaseQuantity}><Remove/></Button>
+                <Button onClick={decreaseQuantity}>
+                    <Remove/>
+                </Button>
             </StyledButtonGroup>
             <StyledAddToCartAndBuyNowBox>
-                <Button variant={"contained"} startIcon={<AddShoppingCart/>} fullWidth>
+                <Button variant={"contained"} startIcon={<AddShoppingCart/>} fullWidth onClick={handleAddToCart}
+                        disabled={isAdding}>
                     <StyledButtonTypography variant={"body2"}>
                         Add To Cart
                     </StyledButtonTypography>

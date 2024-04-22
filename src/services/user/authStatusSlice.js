@@ -21,6 +21,7 @@ const authStatusSlice = createSlice({
 });
 
 export const getAuthStatus = state => state.authStatus;
+export const getAuthToken = state => state.authStatus.token;
 
 export const {setAuthStatus, removeAuthStatus} = authStatusSlice.actions;
 export default authStatusSlice.reducer;

@@ -8,6 +8,10 @@ import ProductsBySubCategory from "./Features/ProductsDashboard/ProductsBySubCat
 import SingleProduct from "./Features/Product/SingleProduct.jsx";
 import Signup from "./Features/Authentication/Signup.jsx";
 import Login from "./Features/Authentication/Login.jsx";
+import {Toaster} from "react-hot-toast";
+import Cart from "./Features/cart/Cart.jsx";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import {CartContextProvider} from "./Contexts/CartContext.jsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -20,7 +24,7 @@ const queryClient = new QueryClient({
 export default function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            {/*<ReactQueryDevtools initialIsOpen={false}/>*/}
+            <ReactQueryDevtools initialIsOpen={false}/>
             <BrowserRouter>
                 <Routes>
                     <Route element={<AppLayout/>}>
@@ -37,10 +41,26 @@ export default function App() {
                         </Route>
                         <Route path={"signup"} element={<Signup/>}/>
                         <Route path={"login"} element={<Login/>}/>
+                        <Route path={"cart"} element={
+                            <CartContextProvider>
+                                <Cart/>
+                            </CartContextProvider>
+                        }/>
                         <Route path={"*"} element={<PageNotFound/>}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
+            <Toaster position={"botton-center"} gutter={12} containerStyle={{margin: '8px'}} toastOptions={{
+                success: {
+                    duration: 3000,
+                },
+                error: {
+                    duration: 3000,
+                },
+                style: {
+                    fontSize: '16px',
+                }
+            }}/>
         </QueryClientProvider>
     )
 }

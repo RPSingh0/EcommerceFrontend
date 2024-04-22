@@ -3,10 +3,7 @@ import {StyledSingleProductInformationTypographyHeadings} from "../Ui/RStyledCom
 import {Link} from "react-router-dom";
 import {ArrowForward} from "@mui/icons-material";
 import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
-import ImageNamePriceSingleSubCategoryByParentCard from "../Dashboard/ImageNamePriceSingleSubCategoryByParentCard.jsx";
 import SimilarProductCard from "./SimilarProductCard.jsx";
-import NamePriceImageDashboardCard from "../Dashboard/NamePriceImageDashboardCard.jsx";
-import ProductsBySubCategoryCard from "../ProductsDashboard/ProductsBySubCategoryCard.jsx";
 
 function SimilarProductsInfo() {
 

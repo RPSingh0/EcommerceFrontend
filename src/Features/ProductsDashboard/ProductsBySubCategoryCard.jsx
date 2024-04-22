@@ -13,6 +13,11 @@ import {
 } from "@mui/material";
 import {AddShoppingCart, FavoriteBorder} from "@mui/icons-material";
 import {NavLink, useLocation} from "react-router-dom";
+import toast from "react-hot-toast";
+import {useSelector} from "react-redux";
+import {isItemAlreadyInCart, isUserLoggedIn} from "../../services/user/userSlice.js";
+import {getAuthToken} from "../../services/user/authStatusSlice.js";
+import {useUpdateCart} from "../cart/useUpdateCart.js";
 
 const StyledCard = styled(Card)(() => ({
     display: "flex",
@@ -61,12 +66,14 @@ function ProductBySubCategoryCardAddToWishlist() {
     );
 }
 
-function ProductBySubCategoryCardAddToCart() {
+function ProductBySubCategoryCardAddToCart({tooltipText, onClick, disabled}) {
     return (
-        <Tooltip TransitionComponent={Zoom} title="Add to Cart">
-            <IconButton aria-label="add-to-cart">
-                <AddShoppingCart/>
-            </IconButton>
+        <Tooltip TransitionComponent={Zoom} title={tooltipText}>
+            <span>
+                <IconButton aria-label="add-to-cart" onClick={onClick} disabled={disabled}>
+                    <AddShoppingCart/>
+                </IconButton>
+            </span>
         </Tooltip>
     );
 }
@@ -126,6 +133,31 @@ function ProductBySubCategoryCardMedia({image, alt}) {
 function ProductsBySubCategoryCard({item}) {
 
     const {pathname: singleProductLink} = useLocation();
+    const isLoggedIn = useSelector(isUserLoggedIn);
+    const authToken = useSelector(getAuthToken);
+    const {isCreating: isAdding, updateCart} = useUpdateCart();
+    const itemInCart = useSelector(isItemAlreadyInCart(item._id));
+    const shouldDisable = itemInCart || isAdding;
+    const text = itemInCart ? "Already in Cart" : "Add to Cart";
+
+    function handleAddToCart() {
+        if (!isLoggedIn) {
+            toast.error("Please log in to add");
+        } else {
+            updateCart({
+                identifier: item._id,
+                quantity: 1,
+                token: authToken
+            }, {
+                onSuccess: () => {
+                    toast.success("Item added to cart")
+                },
+                onError: (error) => {
+                    console.log(error)
+                }
+            })
+        }
+    }
 
     return (
         <StyledCard>
@@ -141,7 +173,8 @@ function ProductsBySubCategoryCard({item}) {
                 <StyledCardActions>
                     <Box>
                         <ProductBySubCategoryCardAddToWishlist/>
-                        <ProductBySubCategoryCardAddToCart/>
+                        <ProductBySubCategoryCardAddToCart tooltipText={text}
+                                                           onClick={handleAddToCart} disabled={shouldDisable}/>
                     </Box>
                     <ProductBySubCategoryCardRating/>
                 </StyledCardActions>
