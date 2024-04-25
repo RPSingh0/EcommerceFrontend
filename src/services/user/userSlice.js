@@ -27,6 +27,11 @@ export const getUserCart = state => state.user.user?.cart;
 export const getNumberOfItemsInCart = state => state.user.user?.cart.reduce((acc, cur) => acc + cur.quantity, 0);
 export const isItemAlreadyInCart = identifier => state => {
     const cart = state.user.user?.cart;
+
+    if (cart === undefined) {
+        return false;
+    }
+
     const existingItemIndex = cart.findIndex(cartItem => cartItem.identifier === identifier);
 
     return existingItemIndex !== -1;
@@ -45,6 +50,11 @@ export const getItemQuantityFromCart = identifier => state => {
 export const getCurrentCartPrice = state => state.user.user?.currentCartPrice;
 export const isItemAlreadyInWishlist = identifier => state => {
     const wishlist = state.user.user?.wishlist;
+
+    if (wishlist === undefined) {
+        return false;
+    }
+
     const existingItemIndex = wishlist.findIndex(cartItem => cartItem.identifier === identifier);
 
     return existingItemIndex !== -1;

@@ -2,7 +2,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getAllParentCategory} from "../../services/parent-category/parentCategoryService.js";
 import GlobalNavBarNavElement from "./GlobalNavBarNavElement.jsx";
 import {Box, Divider, styled} from "@mui/material";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import React from 'react';
 
 const StyledParentCategoryContainerBox = styled(Box)(({theme}) => ({
@@ -18,10 +18,17 @@ const StyledParentCategoryContainerBox = styled(Box)(({theme}) => ({
     "hr:last-of-type": {
         display: "none"
     },
+
+    "& a": {
+        color: "#333"
+    },
+
     "& a.active": {
-        textDecoration: "underline !important",
+        backgroundColor: "#1976d2",
+        borderRadius: "9px",
+        color: "#f5f5f5 !important"
     }
-}))
+}));
 
 function GlobalNavBarContainer() {
 
@@ -34,7 +41,7 @@ function GlobalNavBarContainer() {
         <StyledParentCategoryContainerBox>
             {!isLoading && !error && data.data.parentCategories.map(item =>
                 <React.Fragment key={item.name}>
-                    <NavLink to={`/home/by/parent/${item.name}`} style={{textDecoration: "none"}}>
+                    <NavLink to={`/home/by/parent/${item.name}`} style={{textDecoration: "none", padding: "0.2rem 0.4rem"}}>
                         <GlobalNavBarNavElement category={item.name}/>
                     </NavLink>
                     <Divider orientation={"vertical"} flexItem/>

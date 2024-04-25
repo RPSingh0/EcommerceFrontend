@@ -7,7 +7,6 @@ const StyledParentCategoryBox = styled(Box)(() => ({
     alignItems: "center",
     justifyContent: "center",
     gap: "0.2rem",
-    color: "#333"
 }))
 
 function GlobalNavBarNavElement({category}) {
