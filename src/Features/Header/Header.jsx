@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar.jsx";
 import UserNavData from "./UserNavData.jsx";
 import MenuDrawer from "./MenuDrawer.jsx";
 import {useState} from "react";
+import GlobalNavBar from "../GlobalNavBar/GlobalNavBar.jsx";
 
 
 function Header() {
@@ -21,6 +22,7 @@ function Header() {
                     <UserNavData/>
                     <MenuDrawer isOpen={isHeaderOpen} toggleHeader={setIsHeaderOpen}/>
                 </Toolbar>
+                <GlobalNavBar/>
             </AppBar>
     );
 }

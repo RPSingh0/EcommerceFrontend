@@ -31,7 +31,6 @@ function AppLayout() {
         <Box>
             <Header/>
             <Stack marginTop={2} gap={2} overflow={"auto"}>
-                <GlobalNavBar/>
                 <Outlet/>
             </Stack>
         </Box>
