@@ -83,9 +83,6 @@ function MenuDrawer({isOpen, toggleHeader}) {
                     <CustomDrawerButton buttonText={"Stats"} linkTo={"/stats"} toggleHeader={toggleHeader}>
                         <QueryStatsOutlined/>
                     </CustomDrawerButton>
-                    <CustomDrawerButton buttonText={"Orders"} linkTo={"/orders"} toggleHeader={toggleHeader}>
-                        <LocalOfferOutlined/>
-                    </CustomDrawerButton>
                     {isLoggedIn &&
                         <>
                             <CustomDrawerButton buttonText={"Log Out"} linkTo={""} toggleHeader={toggleHeader}

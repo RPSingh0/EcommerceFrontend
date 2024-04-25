@@ -19,7 +19,7 @@ const userSlice = createSlice({
         },
     }
 });
-
+export const getUserDetails = state => state.user.user;
 export const getUserImage = state => state.user.user?.userImage;
 export const isUserLoggedIn = state => state.user.isLoggedIn;
 export const getUserName = state => `${state.user.user?.firstName} ${state.user.user?.lastName}`;
@@ -43,6 +43,12 @@ export const getItemQuantityFromCart = identifier => state => {
     return 1;
 }
 export const getCurrentCartPrice = state => state.user.user?.currentCartPrice;
+export const isItemAlreadyInWishlist = identifier => state => {
+    const wishlist = state.user.user?.wishlist;
+    const existingItemIndex = wishlist.findIndex(cartItem => cartItem.identifier === identifier);
 
+    return existingItemIndex !== -1;
+}
+export const getNumberOfItemsInWishlist = state => state.user.user?.wishlist.length;
 export const {setUserData, logoutUser} = userSlice.actions;
 export default userSlice.reducer;

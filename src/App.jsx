@@ -12,6 +12,9 @@ import {Toaster} from "react-hot-toast";
 import Cart from "./Features/cart/Cart.jsx";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import {CartContextProvider} from "./Contexts/CartContext.jsx";
+import Wishlist from "./Features/wishlist/Wishlist.jsx";
+import {WishlistContextProvider} from "./Contexts/WishlistContext.jsx";
+import Account from "./Features/Account/Account.jsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -41,10 +44,22 @@ export default function App() {
                         </Route>
                         <Route path={"signup"} element={<Signup/>}/>
                         <Route path={"login"} element={<Login/>}/>
+                        <Route path={"account"} element={
+                            <CartContextProvider>
+                                <WishlistContextProvider>
+                                    <Account/>
+                                </WishlistContextProvider>
+                            </CartContextProvider>
+                        }/>
                         <Route path={"cart"} element={
                             <CartContextProvider>
                                 <Cart/>
                             </CartContextProvider>
+                        }/>
+                        <Route path={"wishlist"} element={
+                            <WishlistContextProvider>
+                                <Wishlist/>
+                            </WishlistContextProvider>
                         }/>
                         <Route path={"*"} element={<PageNotFound/>}/>
                     </Route>

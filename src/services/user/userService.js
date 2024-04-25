@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'http://localhost:3000/api/v1/user';
+const URL = 'http://192.168.247.206:3000/api/v1/user';
 
 export async function signupUserService({
     firstName, lastName, email, password, confirmPassword, address, mobileNumber, userImage
@@ -54,4 +54,25 @@ export async function loginUserWithTokenService({
     }
 
     return data;
+}
+
+export async function updateUserInfoService({
+    firstName, lastName, address, mobileNumber, token
+}) {
+    let {status, data} = await axios.patch(`${URL}/updateMe`, {
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        mobile: mobileNumber,
+    }, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    if (status !== 201) {
+        throw new Error('Unable to create account...');
+    }
+
+    return data
 }

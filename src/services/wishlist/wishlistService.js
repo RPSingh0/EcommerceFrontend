@@ -2,11 +2,10 @@ import axios from "axios";
 
 const URL = 'http://192.168.247.206:3000/api/v1/user';
 
-export async function updateCartService({identifier, quantity, token}) {
+export async function updateWishlistService({identifier, token}) {
 
-    let {status, data} = await axios.post(`${URL}/updateCart`, {
+    let {status, data} = await axios.post(`${URL}/updateWishlist`, {
         identifier: identifier,
-        quantity: quantity
     }, {
         headers: {
             Authorization: `Bearer ${token}`
@@ -14,15 +13,15 @@ export async function updateCartService({identifier, quantity, token}) {
     });
 
     if (status !== 201) {
-        throw new Error('Unable to update cart...');
+        throw new Error('Unable to update wishlist...');
     }
 
     return data;
 }
 
-export async function getCartItemsService(token) {
+export async function getWishlistItemsService(token) {
 
-    let {status, data} = await axios.get(`${URL}/getItemDetailsInCart`, {
+    let {status, data} = await axios.get(`${URL}/getItemDetailsInWishlist`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -35,8 +34,8 @@ export async function getCartItemsService(token) {
     return data;
 }
 
-export async function deleteCartItemService({identifier, token}) {
-    let {status, data} = await axios.post(`${URL}/deleteItem`, {
+export async function deleteWishlistItemService({identifier, token}) {
+    let {status, data} = await axios.post(`${URL}/deleteItemWishlist`, {
         identifier: identifier
     }, {
         headers: {
@@ -51,8 +50,8 @@ export async function deleteCartItemService({identifier, token}) {
     return data;
 }
 
-export async function clearCartService(token) {
-    let {status, data} = await axios.post(`${URL}/clearCart`, {}, {
+export async function clearWishlistService(token) {
+    let {status, data} = await axios.post(`${URL}/clearWishlist`, {}, {
         headers: {
             Authorization: `Bearer ${token}`
         }

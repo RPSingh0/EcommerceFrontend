@@ -15,9 +15,10 @@ import {AddShoppingCart, FavoriteBorder} from "@mui/icons-material";
 import {NavLink, useLocation} from "react-router-dom";
 import toast from "react-hot-toast";
 import {useSelector} from "react-redux";
-import {isItemAlreadyInCart, isUserLoggedIn} from "../../services/user/userSlice.js";
+import {isItemAlreadyInCart, isItemAlreadyInWishlist, isUserLoggedIn} from "../../services/user/userSlice.js";
 import {getAuthToken} from "../../services/user/authStatusSlice.js";
 import {useUpdateCart} from "../cart/useUpdateCart.js";
+import {useUpdateWishlist} from "../wishlist/useUpdateWishlist.js";
 
 const StyledCard = styled(Card)(() => ({
     display: "flex",
@@ -56,12 +57,14 @@ const StyledNavLink = styled(NavLink)(() => ({
     color: "inherit"
 }))
 
-function ProductBySubCategoryCardAddToWishlist() {
+function ProductBySubCategoryCardAddToWishlist({tooltipText, onClick, disabled}) {
     return (
-        <Tooltip TransitionComponent={Zoom} title="Add To Wishlist">
-            <IconButton aria-label="add-to-wishlist">
-                <FavoriteBorder/>
-            </IconButton>
+        <Tooltip TransitionComponent={Zoom} title={tooltipText}>
+            <span>
+                <IconButton aria-label="add-to-wishlist" onClick={onClick} disabled={disabled}>
+                    <FavoriteBorder/>
+                </IconButton>
+            </span>
         </Tooltip>
     );
 }
@@ -135,10 +138,18 @@ function ProductsBySubCategoryCard({item}) {
     const {pathname: singleProductLink} = useLocation();
     const isLoggedIn = useSelector(isUserLoggedIn);
     const authToken = useSelector(getAuthToken);
-    const {isCreating: isAdding, updateCart} = useUpdateCart();
+
+    // Cart
+    const {isCreating: isAddingInCart, updateCart} = useUpdateCart();
     const itemInCart = useSelector(isItemAlreadyInCart(item._id));
-    const shouldDisable = itemInCart || isAdding;
-    const text = itemInCart ? "Already in Cart" : "Add to Cart";
+    const shouldDisableAddToCart = itemInCart || isAddingInCart;
+    const textAddToCart = itemInCart ? "Already in Cart" : "Add to Cart";
+
+    // Cart
+    const {isCreating: isAddingInWishlist, updateWishlist} = useUpdateWishlist();
+    const itemInWishlist = useSelector(isItemAlreadyInWishlist(item._id));
+    const shouldDisableAddToWishlist = itemInWishlist || isAddingInWishlist;
+    const textAddToWishlist = itemInWishlist ? "Already in Wishlist" : "Add to Wishlist";
 
     function handleAddToCart() {
         if (!isLoggedIn) {
@@ -150,10 +161,28 @@ function ProductsBySubCategoryCard({item}) {
                 token: authToken
             }, {
                 onSuccess: () => {
-                    toast.success("Item added to cart")
+                    toast.success("Item added to cart");
                 },
                 onError: (error) => {
-                    console.log(error)
+                    console.log(error);
+                }
+            })
+        }
+    }
+
+    function handleAddToWishlist() {
+        if (!isLoggedIn) {
+            toast.error("Please log in to add")
+        } else {
+            updateWishlist({
+                identifier: item._id,
+                token: authToken
+            }, {
+                onSuccess: () => {
+                    toast.success("Item added to wishlist");
+                },
+                onError: (error) => {
+                    console.log(error);
                 }
             })
         }
@@ -172,9 +201,12 @@ function ProductsBySubCategoryCard({item}) {
                 </StyledNavLink>
                 <StyledCardActions>
                     <Box>
-                        <ProductBySubCategoryCardAddToWishlist/>
-                        <ProductBySubCategoryCardAddToCart tooltipText={text}
-                                                           onClick={handleAddToCart} disabled={shouldDisable}/>
+                        <ProductBySubCategoryCardAddToWishlist tooltipText={textAddToWishlist}
+                                                               onClick={handleAddToWishlist}
+                                                               disabled={shouldDisableAddToWishlist}/>
+                        <ProductBySubCategoryCardAddToCart tooltipText={textAddToCart}
+                                                           onClick={handleAddToCart}
+                                                           disabled={shouldDisableAddToCart}/>
                     </Box>
                     <ProductBySubCategoryCardRating/>
                 </StyledCardActions>

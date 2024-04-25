@@ -27,6 +27,7 @@ export const StyledProductsContainer = styled(Box)(({theme}) => ({
     backgroundColor: theme.palette.grey["100"],
     padding: "1.5rem 1rem",
     borderRadius: theme.shape.borderRadius,
+    width: "100%",
 
     [theme.breakpoints.up('md')]: {
         width: "90%"

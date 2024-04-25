@@ -1,5 +1,5 @@
 import {Box, Divider} from "@mui/material";
-import {StyledCartContainer} from "../Ui/RStyledComponents.jsx";
+import {StyledCartContainer, StyledProductsContainer} from "../Ui/RStyledComponents.jsx";
 import CartItem from "./CartItem.jsx";
 import CartOverview from "./CartOverview.jsx";
 import {useCartContext} from "../../Contexts/CartContext.jsx";
@@ -10,9 +10,9 @@ function Cart() {
 
     if (!isLoadingCart && !cartError && cartData.data.products.length === 0) {
         return (
-            <Box>
+            <StyledProductsContainer>
                 No Data in Cart
-            </Box>
+            </StyledProductsContainer>
         );
     }
 
