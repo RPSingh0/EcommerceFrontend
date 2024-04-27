@@ -2,6 +2,7 @@ import {createContext, useContext} from "react";
 import {useParams} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {getAllProductsBySubCategory, getProductByProductId} from "../services/product/productService.js";
+import {getReviewsForProductService} from "../services/review/reviewService.js";
 
 const SingleProductContext = createContext();
 
@@ -16,12 +17,15 @@ function SingleProductContextProvider({children}) {
         queryFn: () => getProductByProductId(productId)
     });
 
-    console.log(singleProductData)
-
     const {isLoading: isLoadingSimilarProducts, data: similarProductsData, error: similarProductsError} = useQuery({
         queryKey: [`similar-${productId}`],
         queryFn: () => getAllProductsBySubCategory(subCategory)
     });
+
+    const {isLoading: isLoadingProductReviews, data: productReviewData, error: productReviewError} = useQuery({
+        queryKey: [`review-${productId}`],
+        queryFn: () => getReviewsForProductService(productId)
+    })
 
     console.log(similarProductsData);
 
@@ -32,7 +36,10 @@ function SingleProductContextProvider({children}) {
             singleProductError,
             isLoadingSimilarProducts,
             similarProductsData,
-            similarProductsError
+            similarProductsError,
+            isLoadingProductReviews,
+            productReviewData,
+            productReviewError
         }}>
             {children}
         </SingleProductContext.Provider>

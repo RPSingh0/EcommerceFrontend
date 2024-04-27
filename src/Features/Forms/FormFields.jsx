@@ -1,5 +1,5 @@
 import {Controller} from "react-hook-form";
-import {FormControl, Paper, styled, TextField, Typography} from "@mui/material";
+import {FormControl, Paper, Rating, styled, TextField, Typography} from "@mui/material";
 import {Circle} from "@mui/icons-material";
 
 const StyledFormControlFilePicker = styled(FormControl)(() => ({
@@ -93,6 +93,26 @@ export function MultilineTextFieldWithController({
                     />
                 </FormControl>
             )}/>
+    );
+}
+
+export function InputRating({
+    control, name, id, defaultValue, disabled
+}) {
+    return (
+        <Controller
+            name={name}
+            control={control}
+            defaultValue={defaultValue}
+            render={({field}) => (
+                <Rating
+                    id={id}
+                    name={name}
+                    disabled={disabled}
+                    value={Number(field.value)}
+                />
+            )}
+        />
     );
 }
 

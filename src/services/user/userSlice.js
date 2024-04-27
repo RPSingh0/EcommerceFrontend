@@ -23,6 +23,7 @@ export const getUserDetails = state => state.user.user;
 export const getUserImage = state => state.user.user?.userImage;
 export const isUserLoggedIn = state => state.user.isLoggedIn;
 export const getUserName = state => `${state.user.user?.firstName} ${state.user.user?.lastName}`;
+export const getUserId = state => state.user.user?._id;
 export const getUserCart = state => state.user.user?.cart;
 export const getNumberOfItemsInCart = state => state.user.user?.cart.reduce((acc, cur) => acc + cur.quantity, 0);
 export const isItemAlreadyInCart = identifier => state => {

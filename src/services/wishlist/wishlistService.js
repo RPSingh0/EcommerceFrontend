@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'http://192.168.247.206:3000/api/v1/user';
+const URL = 'http://localhost:3000/api/v1/user';
 
 export async function updateWishlistService({identifier, token}) {
 

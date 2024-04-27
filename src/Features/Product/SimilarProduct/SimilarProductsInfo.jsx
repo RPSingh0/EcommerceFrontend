@@ -1,8 +1,8 @@
 import {Box} from "@mui/material";
-import {StyledSingleProductInformationTypographyHeadings} from "../Ui/RStyledComponents.jsx";
+import {StyledSingleProductInformationTypographyHeadings} from "../../Ui/RStyledComponents.jsx";
 import {Link} from "react-router-dom";
 import {ArrowForward} from "@mui/icons-material";
-import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
+import {useSingleProductContext} from "../../../Contexts/SingleProductContext.jsx";
 import SimilarProductCard from "./SimilarProductCard.jsx";
 
 function SimilarProductsInfo() {

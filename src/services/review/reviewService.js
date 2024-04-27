@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'http://localhost:3000/api/v1/user';
+const URL = 'http://localhost:3000/api/v1/review';
 
 export async function updateCartService({identifier, quantity, token}) {
 
@@ -20,16 +20,12 @@ export async function updateCartService({identifier, quantity, token}) {
     return data;
 }
 
-export async function getCartItemsService(token) {
+export async function getReviewsForProductService(productId) {
 
-    let {status, data} = await axios.get(`${URL}/getItemDetailsInCart`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
+    let {status, data} = await axios.get(`${URL}/get/${productId}`);
 
     if (status !== 200) {
-        throw new Error('Unable to get item details...');
+        throw new Error('Unable to get reviews for product...');
     }
 
     return data;

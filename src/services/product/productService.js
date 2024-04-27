@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const URL = 'https://e18d-150-107-93-80.ngrok-free.app/api/v1/product/bySubCategory';
-const URL = 'http://192.168.247.206:3000/api/v1/product/';
+const URL = 'http://localhost:3000/api/v1/product/';
 // const URL = 'http://192.168.130.13:3000/api/v1/product/';
 
 // const URL = 'https://3550-150-107-93-11.ngrok-free.app/api/v1/parentCategory';

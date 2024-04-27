@@ -61,7 +61,7 @@ function SingleProductProductInfo() {
                     {productInfo.name}
                 </Typography>
                 <Typography variant={"subtitle1"}>
-                    {productInfo.price}
+                    &#x20B9;{productInfo.price} /-
                 </Typography>
                 <Box sx={{
                     display: "flex",

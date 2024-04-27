@@ -3,9 +3,9 @@ import {StyledSingleProductContainer} from "../Ui/RStyledComponents.jsx";
 import SingleProductProductInfo from "./SingleProductProductInfo.jsx";
 import {Box, Divider, styled} from "@mui/material";
 import ProductDescription from "./ProductDescription.jsx";
-import SimilarProductsInfo from "./SimilarProductsInfo.jsx";
-import ProductReviews from "./ProductReviews.jsx";
+import SimilarProductsInfo from "./SimilarProduct/SimilarProductsInfo.jsx";
 import {SingleProductContextProvider} from "../../Contexts/SingleProductContext.jsx";
+import ProductReviewInfo from "./ProductReview/ProductReviewInfo.jsx";
 
 const StyledSingleProductImageAndInfoContainer = styled(Box)(({theme}) => ({
     display: "grid",
@@ -34,7 +34,7 @@ function SingleProduct() {
                 <Divider/>
                 <SimilarProductsInfo/>
                 <Divider/>
-                <ProductReviews/>
+                <ProductReviewInfo/>
             </StyledSingleProductContainer>
         </SingleProductContextProvider>
     );
