@@ -73,7 +73,7 @@ function RatingContainer({rating, totalRatings}) {
                 </Typography>
             </StyledRatingContainer>
             <Typography variant={"caption"}>
-                ({totalRatings}) ratings
+                {totalRatings} ratings
             </Typography>
         </Box>
     );

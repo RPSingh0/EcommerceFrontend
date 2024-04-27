@@ -1,6 +1,5 @@
 import Header from "../../Features/Header/Header.jsx";
 import {Box, Stack} from "@mui/material";
-import GlobalNavBar from "../../Features/GlobalNavBar/GlobalNavBar.jsx";
 import {Outlet} from "react-router-dom";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";

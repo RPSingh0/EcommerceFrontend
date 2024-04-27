@@ -1,9 +1,30 @@
-import {Box} from "@mui/material";
+import {Box, Paper, Skeleton} from "@mui/material";
 import {StyledSingleProductInformationTypographyHeadings} from "../../Ui/RStyledComponents.jsx";
 import {Link} from "react-router-dom";
 import {ArrowForward} from "@mui/icons-material";
 import {useSingleProductContext} from "../../../Contexts/SingleProductContext.jsx";
 import SimilarProductCard from "./SimilarProductCard.jsx";
+
+function LoadingSimilarProducts() {
+    return (
+        <Paper sx={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "1rem 1rem 1rem 1rem",
+            gap: "1rem",
+            width: "20rem",
+            minWidth: "20rem",
+            height: "20rem"
+        }}>
+            <Box sx={{height: "65%"}}>
+                <Skeleton animation="wave" variant="rounded" sx={{height: "100%"}}/>
+            </Box>
+            <Box sx={{height: "35%"}}>
+                <Skeleton animation="wave" variant="rounded" sx={{height: "100%"}}/>
+            </Box>
+        </Paper>
+    );
+}
 
 function SimilarProductsInfo() {
 
@@ -34,6 +55,10 @@ function SimilarProductsInfo() {
                     display: "none"
                 },
             }}>
+                {
+                    isLoadingSimilarProducts &&
+                    [1, 2, 3, 4, 5, 6].map(item => <LoadingSimilarProducts key={item}/>)
+                }
                 {!isLoadingSimilarProducts && !similarProductsError && similarProductsData.data.products.map(item =>
                     <SimilarProductCard item={item}/>)}
             </Box>

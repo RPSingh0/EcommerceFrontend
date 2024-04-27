@@ -1,4 +1,4 @@
-import {Box, IconButton, MobileStepper, Paper, styled} from "@mui/material";
+import {Box, CircularProgress, IconButton, MobileStepper, Paper, Skeleton, styled} from "@mui/material";
 import {useEffect, useState} from "react";
 import {ArrowBack, ArrowForward} from "@mui/icons-material";
 import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
@@ -87,6 +87,10 @@ function SingleProductProductImagesCarousel() {
                          style={{objectFit: "contain"}}
                     />
                 </Box>
+            }
+            {
+                isLoadingProductDetails &&
+                <Skeleton animation={"wave"} variant="rectangular" sx={{height: "100%", width: "100%"}} />
             }
         </Paper>
     );

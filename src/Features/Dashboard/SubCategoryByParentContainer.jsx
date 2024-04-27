@@ -1,6 +1,6 @@
 import {useQuery} from "@tanstack/react-query";
 import {getAllSubCategoryUnderAllParentCategory} from "../../services/parent-category/parentCategoryService.js";
-import {Box, styled, Typography} from "@mui/material";
+import {Box, CircularProgress, LinearProgress, styled, Typography} from "@mui/material";
 import {toTitleCase} from "../../utilities/util.jsx";
 import NamePriceImageDashboardCard from "./NamePriceImageDashboardCard.jsx";
 import {Outlet} from "react-router-dom";
@@ -33,6 +33,17 @@ function SubCategoryByParentContainer() {
 
     return (
         <>
+            {isLoading &&
+                <Box sx={{
+                    position: "fixed",
+                    top: "50%",
+                    right: "50%",
+                    transform: "translate(50%, 50%)"
+                }}>
+                    <CircularProgress/>
+                </Box>
+
+            }
             {!isLoading && !error && Object.entries(data).map(([key, value]) =>
                 <StyledMainContentDashboard key={key}>
                     <Typography variant={"h6"}>
@@ -50,7 +61,6 @@ function SubCategoryByParentContainer() {
                     </StyledSubCategoryByParentBarBox>
                 </StyledMainContentDashboard>
             )}
-            <Outlet/>
         </>
     );
 }

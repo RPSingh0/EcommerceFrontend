@@ -1,4 +1,4 @@
-import {Box, Divider, styled, Typography} from "@mui/material";
+import {Box, Divider, LinearProgress, Skeleton, styled, Typography} from "@mui/material";
 import ProductShipping from "./ProductShipping.jsx";
 import BuyNowAddToCart from "./BuyNowAddToCart.jsx";
 import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
@@ -53,7 +53,7 @@ function RatingContainer({rating, totalRatings}) {
                 </Typography>
             </StyledRatingContainer>
             <Typography variant={"caption"}>
-                ({totalRatings}) ratings
+                {totalRatings} ratings
             </Typography>
         </Box>
     );
@@ -88,6 +88,11 @@ function SingleProductProductInfo() {
                     <Divider/>
                     <ProductShipping/>
                     <Divider/>
+                </Box>
+            }
+            {isLoadingProductDetails &&
+                <Box sx={{height: "100%"}}>
+                    <Skeleton variant="rounded" animation="wave" sx={{height: "100%", minHeight: "2rem"}}/>
                 </Box>
             }
         </Box>

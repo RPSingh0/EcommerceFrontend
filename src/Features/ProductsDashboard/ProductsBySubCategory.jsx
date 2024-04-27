@@ -2,7 +2,7 @@ import {StyledProductsContainer} from "../Ui/RStyledComponents.jsx";
 import {useParams} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {getAllProductsBySubCategory} from "../../services/product/productService.js";
-import {Box, styled} from "@mui/material";
+import {Box, CircularProgress, styled} from "@mui/material";
 import ProductsBySubCategoryCard from "./ProductsBySubCategoryCard.jsx";
 
 const StyledProductsCardBox = styled(Box)(({theme}) => ({
@@ -33,14 +33,27 @@ function ProductsBySubCategory() {
     });
 
     return (
-        <StyledProductsContainer>
-            {/*<Filters/>*/}
-            <StyledProductsCardBox>
-                {!isLoading && !error &&
-                    data.data.products.map(item => <ProductsBySubCategoryCard item={item} key={item._id}/>)
-                }
-            </StyledProductsCardBox>
-        </StyledProductsContainer>
+        <>
+            {
+                !isLoading && !error &&
+                <StyledProductsContainer>
+                    <StyledProductsCardBox>
+                        {data.data.products.map(item => <ProductsBySubCategoryCard item={item} key={item._id}/>)}
+                    </StyledProductsCardBox>
+                </StyledProductsContainer>
+            }
+            {
+                isLoading &&
+                <Box sx={{
+                    position: "fixed",
+                    top: "50%",
+                    right: "50%",
+                    transform: "translate(50%, 50%)"
+                }}>
+                    <CircularProgress/>
+                </Box>
+            }
+        </>
     );
 }
 

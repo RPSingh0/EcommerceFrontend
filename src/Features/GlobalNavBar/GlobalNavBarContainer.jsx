@@ -1,7 +1,7 @@
 import {useQuery} from "@tanstack/react-query";
 import {getAllParentCategory} from "../../services/parent-category/parentCategoryService.js";
 import GlobalNavBarNavElement from "./GlobalNavBarNavElement.jsx";
-import {Box, Divider, styled} from "@mui/material";
+import {Box, Divider, LinearProgress, styled} from "@mui/material";
 import {Link, NavLink} from "react-router-dom";
 import React from 'react';
 
@@ -39,6 +39,7 @@ function GlobalNavBarContainer() {
 
     return (
         <StyledParentCategoryContainerBox>
+            {isLoading && <LinearProgress sx={{width: "100%"}}/>}
             {!isLoading && !error && data.data.parentCategories.map(item =>
                 <React.Fragment key={item.name}>
                     <NavLink to={`/home/by/parent/${item.name}`} style={{textDecoration: "none", padding: "0.2rem 0.4rem"}}>
