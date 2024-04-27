@@ -2,11 +2,12 @@ import axios from "axios";
 
 const URL = 'http://localhost:3000/api/v1/review';
 
-export async function updateCartService({identifier, quantity, token}) {
+export async function updateReviewService({productId, review, rating, token}) {
 
-    let {status, data} = await axios.post(`${URL}/updateCart`, {
-        identifier: identifier,
-        quantity: quantity
+    let {status, data} = await axios.patch(`${URL}/update`, {
+        productId: productId,
+        review: review,
+        rating: rating
     }, {
         headers: {
             Authorization: `Bearer ${token}`
@@ -14,7 +15,7 @@ export async function updateCartService({identifier, quantity, token}) {
     });
 
     if (status !== 201) {
-        throw new Error('Unable to update cart...');
+        throw new Error('Unable to update review...');
     }
 
     return data;
@@ -31,17 +32,17 @@ export async function getReviewsForProductService(productId) {
     return data;
 }
 
-export async function deleteCartItemService({identifier, token}) {
-    let {status, data} = await axios.post(`${URL}/deleteItem`, {
-        identifier: identifier
+export async function deleteReviewService({productId, token}) {
+    let {status, data} = await axios.post(`${URL}/delete`, {
+        productId: productId
     }, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
 
-    if (status !== 201) {
-        throw new Error('Unable to delete item from cart...');
+    if (status !== 200) {
+        throw new Error('Unable to delete review...');
     }
 
     return data;

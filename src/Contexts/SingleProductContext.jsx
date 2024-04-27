@@ -23,7 +23,7 @@ function SingleProductContextProvider({children}) {
     });
 
     const {isLoading: isLoadingProductReviews, data: productReviewData, error: productReviewError} = useQuery({
-        queryKey: [`review-${productId}`],
+        queryKey: [`reviews`],
         queryFn: () => getReviewsForProductService(productId)
     })
 

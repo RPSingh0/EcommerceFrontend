@@ -106,6 +106,7 @@ export function InputRating({
             defaultValue={defaultValue}
             render={({field}) => (
                 <Rating
+                    {...field}
                     id={id}
                     name={name}
                     disabled={disabled}

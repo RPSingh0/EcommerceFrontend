@@ -13,17 +13,17 @@ function Header() {
     const [isHeaderOpen, setIsHeaderOpen] = useState(false)
 
     return (
-            <AppBar position={"sticky"}>
-                <Toolbar sx={{justifyContent: "space-between", gap: "1rem"}}>
-                    <OpenMenu toggleHeader={setIsHeaderOpen}/>
-                    <SiteLogo/>
-                    <SearchBar/>
-                    <Box sx={{flexGrow: 1}}></Box>
-                    <UserNavData/>
-                    <MenuDrawer isOpen={isHeaderOpen} toggleHeader={setIsHeaderOpen}/>
-                </Toolbar>
-                <GlobalNavBar/>
-            </AppBar>
+        <AppBar position={"sticky"}>
+            <Toolbar sx={{justifyContent: "space-between", gap: "1rem"}}>
+                <OpenMenu toggleHeader={setIsHeaderOpen}/>
+                <SiteLogo/>
+                <SearchBar/>
+                <Box sx={{flexGrow: 1}}></Box>
+                <UserNavData/>
+                <MenuDrawer isOpen={isHeaderOpen} toggleHeader={setIsHeaderOpen}/>
+            </Toolbar>
+            <GlobalNavBar/>
+        </AppBar>
     );
 }
 

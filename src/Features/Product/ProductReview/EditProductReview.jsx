@@ -1,8 +1,11 @@
-import {Box, Button, Dialog, DialogContent, DialogTitle, IconButton, Rating, styled} from "@mui/material";
+import {Box, Button, Dialog, DialogContent, DialogTitle, IconButton, styled} from "@mui/material";
 import {CloseOutlined} from "@mui/icons-material";
 import {InputRating, MultilineTextFieldWithController} from "../../Forms/FormFields.jsx";
 import {useForm} from "react-hook-form";
-import {useState} from "react";
+import {useUpdateReview} from "./useUpdateReview.js";
+import {useSelector} from "react-redux";
+import {getAuthToken} from "../../../services/user/authStatusSlice.js";
+import toast from "react-hot-toast";
 
 const StyledSignupForm = styled(Box)(({theme}) => ({
     display: "flex",
@@ -13,9 +16,27 @@ const StyledSignupForm = styled(Box)(({theme}) => ({
 function EditProductReview({reviewToEdit, isOpen, closeModal}) {
 
     const {control, handleSubmit, formState: {errors}} = useForm();
+    const token = useSelector(getAuthToken);
+    const {isUpdating, updateReview} = useUpdateReview();
 
     function onSubmit(data) {
-        console.log(data);
+        const {review, rating} = data;
+        const productId = reviewToEdit.productId;
+
+        updateReview({
+            productId: productId,
+            review: review,
+            rating: Number(rating),
+            token: token
+        }, {
+            onSuccess: () => {
+                toast.success("Review Updated");
+                closeModal();
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        });
     }
 
     function onError() {
@@ -47,7 +68,8 @@ function EditProductReview({reviewToEdit, isOpen, closeModal}) {
                         control={control}
                         name={"rating"}
                         id={"rating"}
-                        defaultValue={String(reviewToEdit.rating)}
+                        defaultValue={reviewToEdit.rating}
+                        disabled={isUpdating}
                     />
                     <MultilineTextFieldWithController
                         control={control}
@@ -55,13 +77,13 @@ function EditProductReview({reviewToEdit, isOpen, closeModal}) {
                         name={"review"}
                         label={"Review"}
                         rows={4}
+                        disabled={isUpdating}
                         defaultValue={reviewToEdit.review}
-                        // disabled={isCreating}
                         requiredMessage={"Please provide a review"}
                         error={!!errors.review}
                         helperText={errors.review?.message}
                     />
-                    <Button variant={"outlined"} type={"submit"}>
+                    <Button variant={"outlined"} type={"submit"} disabled={isUpdating}>
                         Update
                     </Button>
                 </StyledSignupForm>

@@ -4,7 +4,13 @@ import {grey} from "@mui/material/colors";
 
 function ProductShipping() {
     return (
-        <Box sx={{display: "flex", flexDirection: "row", gap: "1rem", color: grey["500"]}}>
+        <Box sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            gap: "1rem",
+            color: grey["500"]
+        }}>
             <Box sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <Speed fontSize={"small"}/>
                 <Typography variant={"caption"} textAlign={"center"}>

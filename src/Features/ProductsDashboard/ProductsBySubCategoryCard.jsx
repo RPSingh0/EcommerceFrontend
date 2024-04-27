@@ -19,6 +19,7 @@ import {isItemAlreadyInCart, isItemAlreadyInWishlist, isUserLoggedIn} from "../.
 import {getAuthToken} from "../../services/user/authStatusSlice.js";
 import {useUpdateCart} from "../cart/useUpdateCart.js";
 import {useUpdateWishlist} from "../wishlist/useUpdateWishlist.js";
+import {getRoundedValueWithPointFivePrecision} from "../../utilities/utilities.js";
 
 const StyledCard = styled(Card)(() => ({
     display: "flex",
@@ -81,9 +82,7 @@ function ProductBySubCategoryCardAddToCart({tooltipText, onClick, disabled}) {
     );
 }
 
-function ProductBySubCategoryCardRating() {
-
-    const rating = Math.round(5 * Math.random());
+function ProductBySubCategoryCardRating({rating}) {
 
     return (
         <Tooltip TransitionComponent={Zoom} title={`Overall: ${rating} / 5`}>
@@ -208,7 +207,7 @@ function ProductsBySubCategoryCard({item}) {
                                                            onClick={handleAddToCart}
                                                            disabled={shouldDisableAddToCart}/>
                     </Box>
-                    <ProductBySubCategoryCardRating/>
+                    <ProductBySubCategoryCardRating rating={getRoundedValueWithPointFivePrecision(item.averageRating)}/>
                 </StyledCardActions>
             </StyledCardContentBox>
         </StyledCard>

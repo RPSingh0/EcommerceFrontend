@@ -1,7 +1,10 @@
-import {Box, Divider, Rating, styled, Tooltip, Typography, Zoom} from "@mui/material";
+import {Box, Divider, styled, Typography} from "@mui/material";
 import ProductShipping from "./ProductShipping.jsx";
 import BuyNowAddToCart from "./BuyNowAddToCart.jsx";
 import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
+import {Star} from "@mui/icons-material";
+import {green} from "@mui/material/colors";
+import {getRoundedValueWithPointFivePrecision} from "../../utilities/utilities.js";
 
 const StyledKeywordsBox = styled(Box)(() => ({
     display: "flex",
@@ -14,20 +17,6 @@ const StyledKeywordsBox = styled(Box)(() => ({
 const StyledSingleKeywordContainer = styled("ul")(() => ({
     padding: "0.1rem 0.2rem",
 }));
-
-function ProductBySubCategoryCardRating() {
-
-    const rating = Math.round(5 * Math.random());
-
-    return (
-        <Tooltip TransitionComponent={Zoom} title={`Overall: ${rating} / 5`}>
-            <Box sx={{display: "flex"}}>
-                <Rating name="read-only" value={rating} precision={0.5}
-                        readOnly/>
-            </Box>
-        </Tooltip>
-    );
-}
 
 function ProductBySubCategoryCardKeywords({keywords, itemId}) {
     return (
@@ -42,6 +31,34 @@ function ProductBySubCategoryCardKeywords({keywords, itemId}) {
     );
 }
 
+const StyledRatingContainer = styled(Box)(({theme}) => ({
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "0.5rem",
+    padding: "0.1rem 0.2rem",
+    backgroundColor: green["500"],
+    borderRadius: theme.shape.borderRadius,
+    color: "white"
+}));
+
+
+function RatingContainer({rating, totalRatings}) {
+    return (
+        <Box sx={{display: "flex", flexDirection: "row", gap: "0.5rem", alignItems: "center"}}>
+            <StyledRatingContainer>
+                <Star sx={{color: "yellow"}} fontSize={"small"}/>
+                <Typography variant={"caption"}>
+                    {rating}
+                </Typography>
+            </StyledRatingContainer>
+            <Typography variant={"caption"}>
+                ({totalRatings}) ratings
+            </Typography>
+        </Box>
+    );
+}
+
 function SingleProductProductInfo() {
 
     const {isLoadingProductDetails, singleProductData, singleProductError} = useSingleProductContext();
@@ -50,37 +67,28 @@ function SingleProductProductInfo() {
     return (
         <Box sx={{height: "100%"}}>
             {!isLoadingProductDetails && !singleProductError &&
-            <Box sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-                justifyContent: "space-between",
-                height: "100%"
-            }}>
-                <Typography variant={"h6"}>
-                    {productInfo.name}
-                </Typography>
-                <Typography variant={"subtitle1"}>
-                    &#x20B9;{productInfo.price} /-
-                </Typography>
                 <Box sx={{
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    gap: "1rem"
+                    flexDirection: "column",
+                    gap: "1rem",
+                    justifyContent: "space-between",
+                    height: "100%"
                 }}>
-                    <ProductBySubCategoryCardRating/>
-                    <Typography variant={"body2"}>
-                        23,453 ratings
+                    <Typography variant={"h6"}>
+                        {productInfo.name}
                     </Typography>
+                    <RatingContainer rating={getRoundedValueWithPointFivePrecision(productInfo.averageRating)}
+                                     totalRatings={productInfo.numRatings}/>
+                    <Typography variant={"h6"}>
+                        &#x20B9;{productInfo.price} /-
+                    </Typography>
+
+                    <ProductBySubCategoryCardKeywords keywords={productInfo.keywords} itemId={productInfo._id}/>
+                    <BuyNowAddToCart/>
+                    <Divider/>
+                    <ProductShipping/>
+                    <Divider/>
                 </Box>
-                <ProductBySubCategoryCardKeywords keywords={productInfo.keywords} itemId={productInfo._id}/>
-                <BuyNowAddToCart/>
-                <Divider/>
-                <ProductShipping/>
-                <Divider/>
-            </Box>
             }
         </Box>
     )

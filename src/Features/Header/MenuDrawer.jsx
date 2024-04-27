@@ -77,14 +77,14 @@ function MenuDrawer({isOpen, toggleHeader}) {
                     <CustomDrawerButton buttonText={"Orders"} linkTo={"/orders"} toggleHeader={toggleHeader}>
                         <LocalOfferOutlined/>
                     </CustomDrawerButton>
-                    <CustomDrawerButton buttonText={"Account"} linkTo={"/account"} toggleHeader={toggleHeader}>
-                        <AccountCircleOutlined/>
-                    </CustomDrawerButton>
                     <CustomDrawerButton buttonText={"Stats"} linkTo={"/stats"} toggleHeader={toggleHeader}>
                         <QueryStatsOutlined/>
                     </CustomDrawerButton>
                     {isLoggedIn &&
                         <>
+                            <CustomDrawerButton buttonText={"Account"} linkTo={"/account"} toggleHeader={toggleHeader}>
+                                <AccountCircleOutlined/>
+                            </CustomDrawerButton>
                             <CustomDrawerButton buttonText={"Log Out"} linkTo={""} toggleHeader={toggleHeader}
                                                 clickHandler={handleUserLogout}>
                                 <LogoutOutlined/>
