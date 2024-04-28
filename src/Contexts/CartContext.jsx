@@ -3,15 +3,18 @@ import {useQuery} from "@tanstack/react-query";
 import {getCartItemsService} from "../services/cart/cartService.js";
 import {useSelector} from "react-redux";
 import {getAuthToken} from "../services/user/authStatusSlice.js";
+import {isUserLoggedIn} from "../services/user/userSlice.js";
 
 const CartContext = createContext();
 
 function CartContextProvider({children}) {
 
     const token = useSelector(getAuthToken);
+    const isLoggedIn = useSelector(isUserLoggedIn);
     const {isLoading: isLoadingCart, data: cartData, error: cartError} = useQuery({
         queryKey: ['cart'],
-        queryFn: () => getCartItemsService(token)
+        queryFn: () => getCartItemsService(token),
+        enabled: isLoggedIn
     });
 
     return (

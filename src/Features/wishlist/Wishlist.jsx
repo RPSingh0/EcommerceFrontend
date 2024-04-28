@@ -1,18 +1,9 @@
 import {StyledProductsContainer} from "../Ui/RStyledComponents.jsx";
 import {useWishlistContext} from "../../Contexts/WishlistContext.jsx";
-import {
-    Box,
-    Button,
-    Card,
-    CardActionArea,
-    CardActions,
-    CardContent,
-    CardMedia,
-    styled,
-    Typography
-} from "@mui/material";
-import {DeleteOutline} from "@mui/icons-material";
+import {Box, CircularProgress, styled, Typography} from "@mui/material";
 import WishlistItem from "./WishlistItem.jsx";
+import {useSelector} from "react-redux";
+import {isUserLoggedIn} from "../../services/user/userSlice.js";
 
 const StyledProductsCardBox = styled(Box)(({theme}) => ({
     display: "grid",
@@ -38,16 +29,67 @@ const StyledProductsCardBox = styled(Box)(({theme}) => ({
 
 function Wishlist() {
 
+    const isLoggedIn = useSelector(isUserLoggedIn);
     const {isLoadingWishlist, wishlistData, wishlistError} = useWishlistContext();
 
+    if (!isLoggedIn) {
+        return (
+            <Box sx={{
+                position: "absolute",
+                height: "15rem",
+                width: "15rem",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)"
+            }}>
+                <img src={"/auth/login-required.png"} height={"100%"} width={"100%"} style={{objectFit: "cover"}}/>
+                <Typography variant={"subtitle1"}>
+                    Please log in to add something to wishlist
+                </Typography>
+            </Box>
+        );
+    }
+
+    if (!isLoadingWishlist && !wishlistError && wishlistData.data.products.length === 0) {
+        return (
+            <Box sx={{
+                position: "absolute",
+                height: "15rem",
+                width: "15rem",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)"
+            }}>
+                <img src={"/wishlist/empty-wishlist.png"} height={"100%"} width={"100%"} style={{objectFit: "cover"}}/>
+                <Typography variant={"subtitle1"}>
+                    Add some products here...
+                </Typography>
+            </Box>
+        );
+    }
+
     return (
-        <StyledProductsContainer>
-            <StyledProductsCardBox>
-                {!isLoadingWishlist && !wishlistError && wishlistData.data.products.map(item =>
-                    <WishlistItem item={item}/>
-                )}
-            </StyledProductsCardBox>
-        </StyledProductsContainer>
+        <>
+            {!isLoadingWishlist && !wishlistError &&
+                <StyledProductsContainer>
+                    <StyledProductsCardBox>
+                        {wishlistData.data.products.map(item =>
+                            <WishlistItem item={item}/>
+                        )}
+                    </StyledProductsCardBox>
+                </StyledProductsContainer>
+            }
+            {isLoadingWishlist &&
+                <Box sx={{
+                    position: "fixed",
+                    top: "50%",
+                    right: "50%",
+                    transform: "translate(50%, 50%)"
+                }}>
+                    <CircularProgress/>
+                </Box>
+            }
+        </>
     );
 }
 

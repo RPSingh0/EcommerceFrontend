@@ -17,9 +17,9 @@ import {getUserDetails, isUserLoggedIn} from "../../services/user/userSlice.js";
 import {getFormattedDate} from "../../utilities/util.jsx";
 import {EditOutlined} from "@mui/icons-material";
 import {useCartContext} from "../../Contexts/CartContext.jsx";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useWishlistContext} from "../../Contexts/WishlistContext.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import EditUserDetails from "./EditUserDetails.jsx";
 
 const StyledUserInfo = styled(Box)(({theme}) => ({
@@ -55,10 +55,17 @@ function Account() {
 
     const isLoggedIn = useSelector(isUserLoggedIn);
     const userDetails = useSelector(getUserDetails);
+    const navigate = useNavigate();
     const {isLoadingCart, cartData, cartError} = useCartContext();
     const {isLoadingWishlist, wishlistData, wishlistError} = useWishlistContext();
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    useEffect(function () {
+        if (!isLoggedIn) {
+            navigate("/login", {replace: true});
+        }
+    }, [isLoggedIn, navigate]);
 
     function handleEditModal() {
         setIsEditModalOpen(true);
@@ -78,7 +85,7 @@ function Account() {
                             <StyledUserAvatar
                                 alt={"user name"}
                                 sx={{}}
-                                src={userDetails?.userImage ? userDetails?.userImage : "/user/fall-back-user.png"}
+                                src={userDetails?.userImage ? userDetails?.userImage : "/user/user-not-found.jpg"}
                                 variant={"rounded"}
                             />
                         </Box>

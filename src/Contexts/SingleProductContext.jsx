@@ -9,8 +9,6 @@ const SingleProductContext = createContext();
 function SingleProductContextProvider({children}) {
 
     const {productId, subCategory} = useParams();
-    const t = useParams();
-    console.log(t);
 
     const {isLoading: isLoadingProductDetails, data: singleProductData, error: singleProductError} = useQuery({
         queryKey: [`product-${productId}`],
@@ -26,8 +24,6 @@ function SingleProductContextProvider({children}) {
         queryKey: [`reviews`],
         queryFn: () => getReviewsForProductService(productId)
     })
-
-    console.log(similarProductsData);
 
     return (
         <SingleProductContext.Provider value={{

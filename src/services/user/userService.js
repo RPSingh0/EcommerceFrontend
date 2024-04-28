@@ -5,7 +5,7 @@ const URL = 'http://localhost:3000/api/v1/user';
 export async function signupUserService({
     firstName, lastName, email, password, confirmPassword, address, mobileNumber, userImage
 }) {
-    let {status, data} = await axios.post(`${URL}/signup`, {
+    let {data} = await axios.post(`${URL}/signup`, {
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -16,27 +16,16 @@ export async function signupUserService({
         userImage: userImage
     });
 
-    if (status !== 201) {
-        throw new Error('Unable to create account...');
-    }
-
-    return data
+    return data;
 }
 
 export async function loginUserService({
     email, password
 }) {
-    let {status, data} = await axios.post(`${URL}/login`, {
+    let {data} = await axios.post(`${URL}/login`, {
         email: email,
         password: password
     });
-
-    return data;
-
-    if (status !== 200) {
-        console.log(data);
-        throw new Error('Unable to login...');
-    }
 
     return data;
 }

@@ -9,10 +9,13 @@ import {
 import {useForm} from "react-hook-form";
 import {StyledSignupLoginBox} from "../Ui/RStyledComponents.jsx";
 import {NavLink, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {v4} from "uuid";
 import {uploadImageAndGetDownloadUrl} from "../../services/firebase/imgageUploadService.js";
 import {useCreateUser} from "./useCreateUser.js";
+import toast from "react-hot-toast";
+import {useSelector} from "react-redux";
+import {isUserLoggedIn} from "../../services/user/userSlice.js";
 
 const StyledAvatarAndDescBox = styled(Box)(() => ({
     display: "flex",
@@ -46,22 +49,39 @@ const StyledSignupForm = styled(Box)(({theme}) => ({
 function Signup() {
 
     const {control, handleSubmit, reset, formState: {errors}} = useForm();
-    const [userImage, setUserImage] = useState("");
-    const {isCreating, createUser} = useCreateUser();
+    const isLoggedIn = useSelector(isUserLoggedIn);
     const navigate = useNavigate();
+    const [userImage, setUserImage] = useState("");
+    const [isUploadingImage, setIsUploadingImage] = useState(false);
+    const {isCreating, createUser} = useCreateUser();
+    const shouldDisable = isUploadingImage || isCreating;
+
+    useEffect(function () {
+        if (isLoggedIn) {
+            navigate("/account", {replace: true});
+        }
+    }, [isLoggedIn, navigate]);
 
     async function onSubmit(data) {
 
         let userImageUrl = null;
 
         if (data.userImage) {
+            setIsUploadingImage(true);
+            const uploadingImageToast = toast.loading("Uploading Image...");
             try {
                 const path = v4();
                 userImageUrl = await uploadImageAndGetDownloadUrl('user', `${path}-${data.firstName}/profile`, userImage);
-            } catch (error) {
-                console.log(error);
+                toast.dismiss(uploadingImageToast);
+                toast.success("Image uploaded successfully");
+            } catch {
+                toast.error("Image upload failed!")
+            } finally {
+                setIsUploadingImage(false);
             }
         }
+
+        const signingUpToast = toast.loading("Just a moment...");
 
         createUser({
             firstName: data.firstName,
@@ -76,16 +96,13 @@ function Signup() {
             onSuccess: () => {
                 setUserImage("");
                 reset();
-                navigate("/");
+                navigate("/")
             },
-            onError: (error) => {
-                console.log(error.message);
+            onSettled: () => {
+                toast.dismiss(signingUpToast);
+                toast.success("Welcome")
             }
         })
-    }
-
-    function onError() {
-
     }
 
     return (
@@ -98,7 +115,7 @@ function Signup() {
                     Sign Up
                 </Typography>
             </StyledAvatarAndDescBox>
-            <StyledSignupForm component={"form"} onSubmit={handleSubmit(onSubmit, onError)}>
+            <StyledSignupForm component={"form"} onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{display: "flex", flexDirection: "row", gap: "1rem", width: "100%"}}>
                     <TextFieldWithController
                         control={control}
@@ -106,7 +123,7 @@ function Signup() {
                         name={"firstName"}
                         label={"First Name"}
                         defaultValue={""}
-                        disabled={isCreating}
+                        disabled={shouldDisable}
                         requiredMessage={"Please provide a user first name"}
                         error={!!errors.firstName}
                         helperText={errors.firstName?.message}
@@ -117,7 +134,7 @@ function Signup() {
                         name={"lastName"}
                         label={"Last Name"}
                         defaultValue={""}
-                        disabled={isCreating}
+                        disabled={shouldDisable}
                         required={false}
                         requiredMessage={"Please provide a user last name"}
                         error={!!errors.lastName}
@@ -131,7 +148,7 @@ function Signup() {
                     label={"Email"}
                     type={"email"}
                     defaultValue={""}
-                    disabled={isCreating}
+                    disabled={shouldDisable}
                     requiredMessage={"Please provide a user email"}
                     error={!!errors.email}
                     helperText={errors.email?.message}
@@ -143,7 +160,7 @@ function Signup() {
                     label={"Password"}
                     type={"password"}
                     defaultValue={""}
-                    disabled={isCreating}
+                    disabled={shouldDisable}
                     requiredMessage={"Please provide a user password"}
                     error={!!errors.password}
                     helperText={errors.password?.message}
@@ -155,7 +172,7 @@ function Signup() {
                     label={"Confirm Password"}
                     type={"password"}
                     defaultValue={""}
-                    disabled={isCreating}
+                    disabled={shouldDisable}
                     requiredMessage={"Please confirm your password"}
                     error={!!errors.confirmPassword}
                     helperText={errors.confirmPassword?.message}
@@ -167,7 +184,7 @@ function Signup() {
                     label={"Address"}
                     rows={4}
                     defaultValue={""}
-                    disabled={isCreating}
+                    disabled={shouldDisable}
                     requiredMessage={"Please enter your address"}
                     error={!!errors.address}
                     helperText={errors.address?.message}
@@ -179,7 +196,7 @@ function Signup() {
                     label={"Phone Number"}
                     type={"mobileNumber"}
                     defaultValue={""}
-                    disabled={isCreating}
+                    disabled={shouldDisable}
                     requiredMessage={"Please enter your phone number"}
                     error={!!errors.mobileNumber}
                     helperText={errors.mobileNumber?.message}
@@ -191,14 +208,14 @@ function Signup() {
                     label={"Profile Picture"}
                     image={userImage}
                     setImage={setUserImage}
-                    disabled={isCreating}
+                    disabled={shouldDisable}
                     error={!!errors.userImage}
                     helperText={errors.userImage?.message}
                 />
-                <Button variant={"contained"} type={"submit"} disabled={isCreating}>
+                <Button variant={"contained"} type={"submit"} disabled={shouldDisable}>
                     Create Account
                 </Button>
-                <NavLink to={"/signin"} style={{textDecoration: "none", textAlign: "end"}}>
+                <NavLink to={"/login"} style={{textDecoration: "none", textAlign: "end"}}>
                     <Typography variant={"caption"}>
                         Already have an account? Sign in here!
                     </Typography>

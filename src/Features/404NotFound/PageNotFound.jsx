@@ -1,21 +1,20 @@
 import {Box, styled, Typography} from "@mui/material";
 
-const StyledNotFoundBox = styled(Box)(() => ({
-    display: "flex",
-    justifyContent: "center",
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)"
-}));
-
 function PageNotFound() {
     return (
-        <StyledNotFoundBox>
-            <Typography variant={"h6"} noWrap>
-                Ja re, galat jagah aa gya hai tu
+        <Box sx={{
+            position: "absolute",
+            height: "15rem",
+            width: "15rem",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)"
+        }}>
+            <img src={"/notFound/not-found.png"} height={"100%"} width={"100%"} style={{objectFit: "cover"}}/>
+            <Typography variant={"subtitle1"}>
+                Sorry, this page does not exists
             </Typography>
-        </StyledNotFoundBox>
+        </Box>
     );
 }
 

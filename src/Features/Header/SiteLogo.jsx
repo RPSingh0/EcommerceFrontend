@@ -1,4 +1,5 @@
 import {Typography} from "@mui/material";
+import {NavLink} from "react-router-dom";
 
 function SiteLogo() {
     return (
@@ -8,7 +9,12 @@ function SiteLogo() {
             component={"div"}
             sx={{display: {xs: "none", sm: "none", md: "block"}}}
         >
-            ECommerce
+            <NavLink to={"/home"} style={{
+                textDecoration: "none",
+                color: "#ffffff",
+            }}>
+                ECommerce
+            </NavLink>
         </Typography>
     );
 }

@@ -11,7 +11,7 @@ function HeaderUser({height = 32, width = 32}) {
             <Avatar
                 alt={"user name"}
                 sx={{width: {width}, height: {height}, objectFit: "contain"}}
-                src={userImage ? userImage : "/user/fall-back-user.png"}
+                src={userImage ? userImage : "/user/user-not-found.jpg"}
             />
         </IconButton>
     );

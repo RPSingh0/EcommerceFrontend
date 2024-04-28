@@ -47,7 +47,7 @@ function ProductReviewCard({item}) {
             minWidth: "20rem",
             maxWidth: "20rem"
         }}>
-            <Avatar alt="Remy Sharp" src={item.user.userImage ? item.user.userImage : '/user/fall-back-user.png'}/>
+            <Avatar alt="Remy Sharp" src={item.user.userImage ? item.user.userImage : '/user/user-not-found.jpg'}/>
             <Box>
                 <Box
                     sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>

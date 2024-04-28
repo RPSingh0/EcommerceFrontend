@@ -4,15 +4,26 @@ import {LockOpenOutlined} from "@mui/icons-material";
 import {TextFieldWithController} from "../Forms/FormFields.jsx";
 import {useForm} from "react-hook-form";
 import {StyledAvatarAndDescBox, StyledSignupLoginBox, StyledSignupLoginForm} from "../Ui/RStyledComponents.jsx";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useLogin} from "./useLogin.js";
 import toast from "react-hot-toast";
+import {useEffect} from "react";
+import {useSelector} from "react-redux";
+import {isUserLoggedIn} from "../../services/user/userSlice.js";
 
 
 function Login() {
 
     const {control, handleSubmit, reset, formState: {errors}} = useForm();
+    const isLoggedIn = useSelector(isUserLoggedIn);
+    const navigate = useNavigate();
     const {isLoggingIn, loginUser} = useLogin();
+
+    useEffect(function () {
+        if (isLoggedIn) {
+            navigate("/account", {replace: true});
+        }
+    }, [isLoggedIn, navigate]);
 
     async function onSubmit(data) {
         const loggingInToast = toast.loading("Logging In...");
@@ -22,16 +33,13 @@ function Login() {
         }, {
             onSuccess: () => {
                 reset();
-                toast.dismiss(loggingInToast);
+                toast.success("Logged In");
+                navigate("/");
             },
-            onError: (error) => {
-                console.log(error);
+            onSettled: () => {
+                toast.dismiss(loggingInToast);
             }
         })
-    }
-
-    function onError() {
-
     }
 
     return (
@@ -44,7 +52,7 @@ function Login() {
                     Log In
                 </Typography>
             </StyledAvatarAndDescBox>
-            <StyledSignupLoginForm component={"form"} onSubmit={handleSubmit(onSubmit, onError)}>
+            <StyledSignupLoginForm component={"form"} onSubmit={handleSubmit(onSubmit)}>
                 <TextFieldWithController
                     control={control}
                     id={"email"}
