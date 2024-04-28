@@ -1,6 +1,6 @@
 import {useQuery} from "@tanstack/react-query";
 import {getAllSubCategoryUnderOneParentCategory} from "../../services/parent-category/parentCategoryService.js";
-import {Box, styled, Typography} from "@mui/material";
+import {Box, CircularProgress, styled, Typography} from "@mui/material";
 import {toTitleCase} from "../../utilities/util.jsx";
 import {useParams} from "react-router-dom";
 import ImageNamePriceSingleSubCategoryByParentCard from "./ImageNamePriceSingleSubCategoryByParentCard.jsx";
@@ -50,20 +50,33 @@ function SubCategoryByParentContainer() {
     });
 
     return (
-        <StyledMainContentDashboard>
-            <Typography variant={"h6"}>
-                All of {toTitleCase(category)}
-            </Typography>
-            <StyledSingleSubCategoryByParentBarBox>
-                {!isLoading && !error &&
-                    data.data.subCategories.map(category =>
-                        <ImageNamePriceSingleSubCategoryByParentCard
-                            key={category.name}
-                            data={category}/>
-                    )
-                }
-            </StyledSingleSubCategoryByParentBarBox>
-        </StyledMainContentDashboard>
+        <>
+            {!isLoading && !error &&
+                <StyledMainContentDashboard>
+                    <Typography variant={"h6"}>
+                        All of {toTitleCase(category)}
+                    </Typography>
+                    <StyledSingleSubCategoryByParentBarBox>
+                        {data.data.subCategories.map(category =>
+                            <ImageNamePriceSingleSubCategoryByParentCard
+                                key={category.name}
+                                data={category}/>
+                        )}
+                    </StyledSingleSubCategoryByParentBarBox>
+                </StyledMainContentDashboard>
+            }
+            {
+                isLoading &&
+                <Box sx={{
+                    position: "fixed",
+                    top: "50%",
+                    right: "50%",
+                    transform: "translate(50%, 50%)"
+                }}>
+                    <CircularProgress/>
+                </Box>
+            }
+        </>
     );
 }
 

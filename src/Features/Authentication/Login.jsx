@@ -6,6 +6,7 @@ import {useForm} from "react-hook-form";
 import {StyledAvatarAndDescBox, StyledSignupLoginBox, StyledSignupLoginForm} from "../Ui/RStyledComponents.jsx";
 import {NavLink} from "react-router-dom";
 import {useLogin} from "./useLogin.js";
+import toast from "react-hot-toast";
 
 
 function Login() {
@@ -14,12 +15,14 @@ function Login() {
     const {isLoggingIn, loginUser} = useLogin();
 
     async function onSubmit(data) {
+        const loggingInToast = toast.loading("Logging In...");
         loginUser({
             email: data.email,
             password: data.password
         }, {
             onSuccess: () => {
                 reset();
+                toast.dismiss(loggingInToast);
             },
             onError: (error) => {
                 console.log(error);

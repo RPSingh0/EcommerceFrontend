@@ -31,7 +31,10 @@ export async function loginUserService({
         password: password
     });
 
+    return data;
+
     if (status !== 200) {
+        console.log(data);
         throw new Error('Unable to login...');
     }
 
