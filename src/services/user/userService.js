@@ -33,7 +33,7 @@ export async function loginUserService({
 export async function loginUserWithTokenService({
     email, token
 }) {
-    let {status, data} = await axios.post(`${URL}/login/byToken`, {
+    let {data} = await axios.post(`${URL}/login/byToken`, {
         email: email
     }, {
         headers: {
@@ -41,17 +41,13 @@ export async function loginUserWithTokenService({
         }
     });
 
-    if (status !== 200) {
-        throw new Error('Unable to login...');
-    }
-
     return data;
 }
 
 export async function updateUserInfoService({
     firstName, lastName, address, mobileNumber, token
 }) {
-    let {status, data} = await axios.patch(`${URL}/updateMe`, {
+    let {data} = await axios.patch(`${URL}/updateMe`, {
         firstName: firstName,
         lastName: lastName,
         address: address,
@@ -61,10 +57,6 @@ export async function updateUserInfoService({
             Authorization: `Bearer ${token}`
         }
     });
-
-    if (status !== 201) {
-        throw new Error('Unable to create account...');
-    }
 
     return data
 }

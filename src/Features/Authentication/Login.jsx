@@ -3,13 +3,13 @@ import {blue} from "@mui/material/colors";
 import {LockOpenOutlined} from "@mui/icons-material";
 import {TextFieldWithController} from "../Forms/FormFields.jsx";
 import {useForm} from "react-hook-form";
-import {StyledAvatarAndDescBox, StyledSignupLoginBox, StyledSignupLoginForm} from "../Ui/RStyledComponents.jsx";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useLogin} from "./useLogin.js";
 import toast from "react-hot-toast";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {isUserLoggedIn} from "../../services/user/userSlice.js";
+import {StyledAvatarAndDescBox, StyledSignupLoginBox, StyledSignupLoginForm} from "./AuthenticationRComponents.jsx";
 
 
 function Login() {

@@ -1,4 +1,4 @@
-import {Avatar, Box, Button, styled, Typography} from "@mui/material";
+import {Avatar, Button, Typography} from "@mui/material";
 import {blue} from "@mui/material/colors";
 import {LockOutlined} from "@mui/icons-material";
 import {
@@ -7,7 +7,6 @@ import {
     TextFieldWithController
 } from "../Forms/FormFields.jsx";
 import {useForm} from "react-hook-form";
-import {StyledSignupLoginBox} from "../Ui/RStyledComponents.jsx";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {v4} from "uuid";
@@ -16,35 +15,12 @@ import {useCreateUser} from "./useCreateUser.js";
 import toast from "react-hot-toast";
 import {useSelector} from "react-redux";
 import {isUserLoggedIn} from "../../services/user/userSlice.js";
-
-const StyledAvatarAndDescBox = styled(Box)(() => ({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center"
-}));
-
-const StyledSignupForm = styled(Box)(({theme}) => ({
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-
-    [theme.breakpoints.down("sm")]: {
-        width: "80%"
-    },
-
-    [theme.breakpoints.up("sm")]: {
-        width: "60%"
-    },
-
-    [theme.breakpoints.up("md")]: {
-        width: "50%"
-    },
-
-    [theme.breakpoints.up("lg")]: {
-        width: "30%"
-    }
-}));
+import {
+    StyledAvatarAndDescBox,
+    StyledFirstLastNameBoxAccount,
+    StyledSignupLoginBox,
+    StyledSignupLoginForm
+} from "./AuthenticationRComponents.jsx";
 
 function Signup() {
 
@@ -115,8 +91,8 @@ function Signup() {
                     Sign Up
                 </Typography>
             </StyledAvatarAndDescBox>
-            <StyledSignupForm component={"form"} onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{display: "flex", flexDirection: "row", gap: "1rem", width: "100%"}}>
+            <StyledSignupLoginForm component={"form"} onSubmit={handleSubmit(onSubmit)}>
+                <StyledFirstLastNameBoxAccount>
                     <TextFieldWithController
                         control={control}
                         id={"firstName"}
@@ -140,7 +116,7 @@ function Signup() {
                         error={!!errors.lastName}
                         helperText={errors.lastName?.message}
                     />
-                </Box>
+                </StyledFirstLastNameBoxAccount>
                 <TextFieldWithController
                     control={control}
                     id={"email"}
@@ -220,7 +196,7 @@ function Signup() {
                         Already have an account? Sign in here!
                     </Typography>
                 </NavLink>
-            </StyledSignupForm>
+            </StyledSignupLoginForm>
         </StyledSignupLoginBox>
     )
 }

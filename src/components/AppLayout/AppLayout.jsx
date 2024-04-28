@@ -5,6 +5,7 @@ import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {getAuthStatus} from "../../services/user/authStatusSlice.js";
 import {useLoginWithToken} from "../../Features/Authentication/useLoginWithToken.js";
+import toast from "react-hot-toast";
 
 function AppLayout() {
     const authStatus = useSelector(getAuthStatus);
@@ -17,10 +18,7 @@ function AppLayout() {
                 token: authStatus.token
             }, {
                 onSuccess: () => {
-                    console.log("logged in from storage");
-                },
-                onError: () => {
-                    console.log("unable to log in, or storage data not exists");
+                    toast.success("Logged in");
                 }
             })
         }
