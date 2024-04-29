@@ -4,7 +4,7 @@ const URL = 'http://localhost:3000/api/v1/user';
 
 export async function updateCartService({identifier, quantity, token}) {
 
-    let {status, data} = await axios.post(`${URL}/updateCart`, {
+    let {data} = await axios.post(`${URL}/updateCart`, {
         identifier: identifier,
         quantity: quantity
     }, {
@@ -12,10 +12,6 @@ export async function updateCartService({identifier, quantity, token}) {
             Authorization: `Bearer ${token}`
         }
     });
-
-    if (status !== 201) {
-        throw new Error('Unable to update cart...');
-    }
 
     return data;
 }
@@ -36,7 +32,7 @@ export async function getCartItemsService(token) {
 }
 
 export async function deleteCartItemService({identifier, token}) {
-    let {status, data} = await axios.post(`${URL}/deleteItem`, {
+    let {data} = await axios.post(`${URL}/deleteItem`, {
         identifier: identifier
     }, {
         headers: {
@@ -44,23 +40,15 @@ export async function deleteCartItemService({identifier, token}) {
         }
     });
 
-    if (status !== 201) {
-        throw new Error('Unable to delete item from cart...');
-    }
-
     return data;
 }
 
 export async function clearCartService(token) {
-    let {status, data} = await axios.post(`${URL}/clearCart`, {}, {
+    let {data} = await axios.post(`${URL}/clearCart`, {}, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
-
-    if (status !== 201) {
-        throw new Error('Unable to clear cart...');
-    }
 
     return data;
 }

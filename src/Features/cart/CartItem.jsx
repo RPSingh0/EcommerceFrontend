@@ -1,4 +1,4 @@
-import {Box, Button, ButtonGroup, styled, Typography} from "@mui/material";
+import {Button, ButtonGroup} from "@mui/material";
 import {Add, DeleteOutline, Remove, UpdateOutlined} from "@mui/icons-material";
 import {useState} from "react";
 import toast from "react-hot-toast";
@@ -7,37 +7,14 @@ import {getAuthToken} from "../../services/user/authStatusSlice.js";
 import {useUpdateCart} from "./useUpdateCart.js";
 import {getItemQuantityFromCart} from "../../services/user/userSlice.js";
 import {useDeleteCartItem} from "./useDeleteCartItem.js";
+import {
+    CartItemImageBox,
+    CartNamePriceBox,
+    StyledImageNamePriceBoxCart,
+    StyledItemButtonContainerCart,
+    StyledSingleItemContainerCart
+} from "./CartRComponents.jsx";
 
-const StyledSingleCartItemContainer = styled(Box)(({theme}) => ({
-    display: "flex",
-    flexDirection: "row",
-    gap: "1rem",
-    justifyContent: "space-between",
-    padding: "1rem",
-
-    [theme.breakpoints.down("lg")]: {
-        flexDirection: "column"
-    },
-
-    [theme.breakpoints.between('sm', 'md')]: {
-        flexDirection: "row"
-    }
-}));
-
-const StyledCartItemButtonContainer = styled(Box)(({theme}) => ({
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-    justifyContent: "space-between",
-
-    [theme.breakpoints.down('lg')]: {
-        flexDirection: "row"
-    },
-
-    [theme.breakpoints.between('sm', 'md')]: {
-        flexDirection: "column"
-    }
-}));
 
 function CartItem({item}) {
     const presentQuantity = useSelector(getItemQuantityFromCart(item._id))
@@ -62,11 +39,8 @@ function CartItem({item}) {
         }, {
             onSuccess: () => {
                 toast.success("Item deleted from cart");
-            },
-            onError: (error) => {
-                console.log(error)
             }
-        })
+        });
     }
 
     function handleUpdateCart() {
@@ -77,31 +51,17 @@ function CartItem({item}) {
         }, {
             onSuccess: () => {
                 toast.success("Cart Updated")
-            },
-            onError: (error) => {
-                console.log(error)
             }
         })
     }
 
     return (
-        <StyledSingleCartItemContainer>
-            <Box sx={{display: "flex", flexDirection: "row", gap: "1rem"}}>
-                <Box height={100}>
-                    <img src={item.coverImage} alt={`${item.name} cover image`} height={"100%"}/>
-                </Box>
-                <Box sx={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
-                    <Box>
-                        <Typography variant={"h6"}>
-                            {item.name}
-                        </Typography>
-                        <Typography variant={"subtitle1"}>
-                            &#x20B9;{item.price}
-                        </Typography>
-                    </Box>
-                </Box>
-            </Box>
-            <StyledCartItemButtonContainer>
+        <StyledSingleItemContainerCart>
+            <StyledImageNamePriceBoxCart>
+                <CartItemImageBox image={item.coverImage} altText={item.name}/>
+                <CartNamePriceBox name={item.name} price={item.price}/>
+            </StyledImageNamePriceBoxCart>
+            <StyledItemButtonContainerCart>
                 <ButtonGroup variant="outlined" fullWidth>
                     <Button onClick={increaseQuantity} size={"small"}>
                         <Add/>
@@ -121,8 +81,8 @@ function CartItem({item}) {
                         <DeleteOutline/>
                     </Button>
                 </ButtonGroup>
-            </StyledCartItemButtonContainer>
-        </StyledSingleCartItemContainer>
+            </StyledItemButtonContainerCart>
+        </StyledSingleItemContainerCart>
     );
 }
 

@@ -1,25 +1,21 @@
-import {Box, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {getItemQuantityFromCart} from "../../services/user/userSlice.js";
+import {StyledCartOverviewItemCart} from "./CartRComponents.jsx";
 
-function CartOverviewItem({item}) {
+function CartOverviewItem({itemId, name, price}) {
 
-    const presentQuantity = useSelector(getItemQuantityFromCart(item._id))
+    const presentQuantity = useSelector(getItemQuantityFromCart(itemId))
 
     return (
-        <Box sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "flex-start"
-        }}>
+        <StyledCartOverviewItemCart>
             <Typography variant={"body1"}>
-                {presentQuantity} x {item.name}
+                {presentQuantity} x {name}
             </Typography>
             <Typography variant={"caption"}>
-                &#x20B9; {presentQuantity * parseInt(item.price)} /-
+                &#x20B9;{presentQuantity * parseInt(price)} /-
             </Typography>
-        </Box>
+        </StyledCartOverviewItemCart>
     );
 }
 

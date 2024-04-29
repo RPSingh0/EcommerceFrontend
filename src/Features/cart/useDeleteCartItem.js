@@ -2,6 +2,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {deleteCartItemService} from "../../services/cart/cartService.js";
 import {setUserData} from "../../services/user/userSlice.js";
 import {useDispatch} from "react-redux";
+import toast from "react-hot-toast";
 
 export function useDeleteCartItem() {
 
@@ -10,12 +11,13 @@ export function useDeleteCartItem() {
 
     const {mutate: deleteCartItem, isPending: isDeletingItem} = useMutation({
         mutationFn: deleteCartItemService,
-        onSuccess: (data) => {
-            dispatch(setUserData(data.data.user));
-            queryClient.invalidateQueries({queryKey: ['cart']});
-        },
-        onError: (error) => {
-            console.log(error);
+        onSettled: (data, error) => {
+            if (error) {
+                toast.error(error.response.data.message);
+            } else {
+                dispatch(setUserData(data.data.user));
+                queryClient.invalidateQueries({queryKey: ['cart']});
+            }
         }
     });
 
