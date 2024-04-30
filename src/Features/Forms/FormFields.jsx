@@ -1,20 +1,7 @@
 import {Controller} from "react-hook-form";
-import {FormControl, Paper, Rating, styled, TextField, Typography} from "@mui/material";
+import {FormControl, Rating, TextField, Typography} from "@mui/material";
 import {Circle} from "@mui/icons-material";
-
-const StyledFormControlFilePicker = styled(FormControl)(() => ({
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem"
-}));
-
-const StyledSelectedFilePaper = styled(Paper)(() => ({
-    display: "flex",
-    flexDirection: "column",
-    gap: "0.4rem",
-    padding: "0.4rem 0.8rem",
-    overflow: "auto"
-}))
+import {StyledFormControlFilePickerForm, StyledSelectedFilePaperForm} from "./FormRComponents.jsx";
 
 export function TextFieldWithController({
     control,
@@ -131,7 +118,7 @@ export function InputFileUploadSingleImage({
             control={control}
             defaultValue={image}
             render={({field}) => (
-                <StyledFormControlFilePicker>
+                <StyledFormControlFilePickerForm>
                     <TextField
                         {...field}
                         id={id}
@@ -151,14 +138,14 @@ export function InputFileUploadSingleImage({
                         }}
                     />
                     {image.length > 0 &&
-                        <StyledSelectedFilePaper>
+                        <StyledSelectedFilePaperForm>
                             {image.map(f =>
                                 <Typography variant={"subtitle2"} noWrap key={f.name}>
                                     <Circle sx={{height: 10}}/> {f.name}
                                 </Typography>)}
-                        </StyledSelectedFilePaper>
+                        </StyledSelectedFilePaperForm>
                     }
-                </StyledFormControlFilePicker>
+                </StyledFormControlFilePickerForm>
             )}/>
     );
 }
