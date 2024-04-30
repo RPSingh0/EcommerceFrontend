@@ -1,9 +1,9 @@
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import AppLayout from "./components/AppLayout/AppLayout.jsx";
-import SubCategoryByParentContainer from "./Features/Dashboard/SubCategoryByParentContainer.jsx";
+import BestOfSubCategory from "./Features/Dashboard/BestOfSubCategory.jsx";
 import PageNotFound from "./Features/404NotFound/PageNotFound.jsx";
-import SingleSubCategoryByParentContainer from "./Features/Dashboard/SingleSubCategoryByParentContainer.jsx";
+import SingleSubCategoryByParentContainer from "./Features/Dashboard/SingleSubCategory.jsx";
 import ProductsBySubCategory from "./Features/ProductsDashboard/ProductsBySubCategory.jsx";
 import SingleProduct from "./Features/Product/SingleProduct.jsx";
 import Signup from "./Features/Authentication/Signup.jsx";
@@ -33,7 +33,7 @@ export default function App() {
                     <Route element={<AppLayout/>}>
                         <Route index element={<Navigate replace={true} to={"home"}/>}/>
                         <Route path={"home"}>
-                            <Route path={""} element={<SubCategoryByParentContainer/>}/>
+                            <Route path={""} element={<BestOfSubCategory/>}/>
                             <Route path={"by/parent/:category"}>
                                 <Route path={""} element={<SingleSubCategoryByParentContainer/>}/>
                                 <Route path={":subCategory"}>

@@ -1,16 +1,18 @@
-import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
+import {Card, CardActionArea, CardContent, Typography} from "@mui/material";
 import {toTitleCase} from "../../utilities/util.jsx";
-import {NavLink} from "react-router-dom";
+import {useLocation} from "react-router-dom";
+import {CustomNavLink, StyledSubCategoryCardMediaDashboard} from "./DashboardRComponents.jsx";
 
-function NamePriceImageDashboardCard({parentCategory, data}) {
+function SubCategoryCard({data}) {
+
+    const {pathname} = useLocation();
 
     return (
-        <NavLink to={`/home/by/parent/${parentCategory}/${data.name}`} style={{textDecoration: "none"}}>
-            <Card sx={{minWidth: "150px", maxWidth: "150px"}}>
-                <CardActionArea>
-                    <CardMedia
+        <CustomNavLink link={`${pathname}/${data.name}`}>
+            <CardActionArea>
+                <Card>
+                    <StyledSubCategoryCardMediaDashboard
                         component={"img"}
-                        height={"100"}
                         image={data.coverImage}
                         alt={`${data.name} cover image`}
                     />
@@ -22,10 +24,10 @@ function NamePriceImageDashboardCard({parentCategory, data}) {
                             from $99
                         </Typography>
                     </CardContent>
-                </CardActionArea>
-            </Card>
-        </NavLink>
+                </Card>
+            </CardActionArea>
+        </CustomNavLink>
     );
 }
 
-export default NamePriceImageDashboardCard;
+export default SubCategoryCard;
