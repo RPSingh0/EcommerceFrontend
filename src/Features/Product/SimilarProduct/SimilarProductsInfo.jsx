@@ -1,5 +1,4 @@
 import {Box} from "@mui/material";
-import {StyledSingleProductInformationTypographyHeadings} from "../../Ui/RStyledComponents.jsx";
 import {Link} from "react-router-dom";
 import {ArrowForward} from "@mui/icons-material";
 import {useSingleProductContext} from "../../../Contexts/SingleProductContext.jsx";
@@ -7,6 +6,7 @@ import SimilarProductCard from "./SimilarProductCard.jsx";
 import {
     SimilarProductsLoadingElements,
     StyledHeaderBoxSimilarProducts,
+    StyledHeadingSimilarProduct,
     StyledSimilarProductsCardListContainerSimilarProducts
 } from "./SimilarProductsRComponents.jsx";
 
@@ -17,9 +17,9 @@ function SimilarProductsInfo() {
     return (
         <Box>
             <StyledHeaderBoxSimilarProducts>
-                <StyledSingleProductInformationTypographyHeadings variant={"subtitle2"}>
+                <StyledHeadingSimilarProduct variant={"subtitle2"}>
                     Similar Products
-                </StyledSingleProductInformationTypographyHeadings>
+                </StyledHeadingSimilarProduct>
                 <Link to={"/all"}>
                     <ArrowForward/>
                 </Link>

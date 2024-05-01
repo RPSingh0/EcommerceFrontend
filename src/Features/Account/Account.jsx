@@ -1,4 +1,3 @@
-import {StyledProductsContainer} from "../Ui/RStyledComponents.jsx";
 import {Divider} from "@mui/material";
 import {useSelector} from "react-redux";
 import {isUserLoggedIn} from "../../services/user/userSlice.js";
@@ -9,7 +8,11 @@ import AccountCartInfo from "./AccountCartInfo.jsx";
 import AccountWishlistInfo from "./AccountWishlistInfo.jsx";
 import AccountImage from "./AccountImage.jsx";
 import AccountInfo from "./AccountInfo.jsx";
-import {StyledFlexColumnOneGapBoxAccount, StyledUserInfoAccount} from "./AccountRComponents.jsx";
+import {
+    StyledAccountDataContainerAccount,
+    StyledFlexColumnOneGapBoxAccount,
+    StyledUserInfoAccount
+} from "./AccountRComponents.jsx";
 
 
 function Account() {
@@ -29,7 +32,7 @@ function Account() {
     }
 
     return (
-        <StyledProductsContainer>
+        <StyledAccountDataContainerAccount>
             {isLoggedIn &&
                 <StyledFlexColumnOneGapBoxAccount>
                     <StyledUserInfoAccount>
@@ -44,7 +47,7 @@ function Account() {
                         <EditUserDetails isEditModalOpen={isEditModalOpen} setIsEditModalOpen={setIsEditModalOpen}/>}
                 </StyledFlexColumnOneGapBoxAccount>
             }
-        </StyledProductsContainer>
+        </StyledAccountDataContainerAccount>
     );
 }
 

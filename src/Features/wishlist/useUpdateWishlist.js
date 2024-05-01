@@ -16,7 +16,6 @@ export function useUpdateWishlist() {
             } else {
                 dispatch(setUserData(data.data.user));
             }
-
         }
     });
 

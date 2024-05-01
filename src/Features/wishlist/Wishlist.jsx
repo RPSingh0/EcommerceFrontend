@@ -1,31 +1,13 @@
-import {StyledProductsContainer} from "../Ui/RStyledComponents.jsx";
 import {useWishlistContext} from "../../Contexts/WishlistContext.jsx";
-import {Box, CircularProgress, styled, Typography} from "@mui/material";
 import WishlistItem from "./WishlistItem.jsx";
 import {useSelector} from "react-redux";
 import {isUserLoggedIn} from "../../services/user/userSlice.js";
-
-const StyledProductsCardBox = styled(Box)(({theme}) => ({
-    display: "grid",
-    rowGap: "1rem",
-    columnGap: "1rem",
-
-    [theme.breakpoints.up('sm')]: {
-        gridTemplateColumns: "1fr",
-    },
-
-    [theme.breakpoints.up('md')]: {
-        gridTemplateColumns: "1fr 1fr",
-    },
-
-    [theme.breakpoints.up('lg')]: {
-        gridTemplateColumns: "1fr 1fr 1fr",
-    },
-
-    [theme.breakpoints.up('xl')]: {
-        gridTemplateColumns: "1fr 1fr 1fr 1fr",
-    },
-}))
+import {
+    LoadingWishlistSpinner,
+    StyledContainerWishlist,
+    StyledWishlistItemCardContainer,
+    WishlistEmptyOrLoginRequired
+} from "./WishlistRComponents.jsx";
 
 function Wishlist() {
 
@@ -34,61 +16,27 @@ function Wishlist() {
 
     if (!isLoggedIn) {
         return (
-            <Box sx={{
-                position: "absolute",
-                height: "15rem",
-                width: "15rem",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
-            }}>
-                <img src={"/auth/login-required.png"} height={"100%"} width={"100%"} style={{objectFit: "cover"}}/>
-                <Typography variant={"subtitle1"}>
-                    Please log in to add something to wishlist
-                </Typography>
-            </Box>
+            <WishlistEmptyOrLoginRequired image={"/auth/login-required.png"}
+                                          text={"Please log in to add something to wishlist"}/>
         );
     }
 
     if (!isLoadingWishlist && !wishlistError && wishlistData.data.products.length === 0) {
         return (
-            <Box sx={{
-                position: "absolute",
-                height: "15rem",
-                width: "15rem",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
-            }}>
-                <img src={"/wishlist/empty-wishlist.png"} height={"100%"} width={"100%"} style={{objectFit: "cover"}}/>
-                <Typography variant={"subtitle1"}>
-                    Add some products here...
-                </Typography>
-            </Box>
+            <WishlistEmptyOrLoginRequired image={"/wishlist/empty-wishlist.png"} text={"Add some products here..."}/>
         );
     }
 
     return (
         <>
             {!isLoadingWishlist && !wishlistError &&
-                <StyledProductsContainer>
-                    <StyledProductsCardBox>
-                        {wishlistData.data.products.map(item =>
-                            <WishlistItem item={item}/>
-                        )}
-                    </StyledProductsCardBox>
-                </StyledProductsContainer>
+                <StyledContainerWishlist>
+                    <StyledWishlistItemCardContainer>
+                        {wishlistData.data.products.map(item => <WishlistItem item={item} key={`wishlist-item-${item._id}`}/>)}
+                    </StyledWishlistItemCardContainer>
+                </StyledContainerWishlist>
             }
-            {isLoadingWishlist &&
-                <Box sx={{
-                    position: "fixed",
-                    top: "50%",
-                    right: "50%",
-                    transform: "translate(50%, 50%)"
-                }}>
-                    <CircularProgress/>
-                </Box>
-            }
+            {isLoadingWishlist && <LoadingWishlistSpinner/>}
         </>
     );
 }

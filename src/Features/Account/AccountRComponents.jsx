@@ -1,5 +1,21 @@
 import {Avatar, Box, Card, CardContent, CardMedia, DialogTitle, IconButton, styled, Typography} from "@mui/material";
 
+export const StyledAccountDataContainerAccount = styled(Box)(({theme}) => ({
+    margin: "auto",
+    backgroundColor: theme.palette.grey["100"],
+    padding: "1.5rem 1rem",
+    borderRadius: theme.shape.borderRadius,
+    width: "100%",
+
+    [theme.breakpoints.up('md')]: {
+        width: "90%"
+    },
+
+    "&::-webkit-scrollbar": {
+        display: "none"
+    },
+}));
+
 export const StyledFlexColumnOneGapBoxAccount = styled(Box)(() => ({
     display: "flex",
     flexDirection: "column",

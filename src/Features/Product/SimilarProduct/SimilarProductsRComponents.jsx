@@ -3,6 +3,12 @@ import {NavLink} from "react-router-dom";
 import {green} from "@mui/material/colors";
 import {Star} from "@mui/icons-material";
 
+export const StyledHeadingSimilarProduct = styled(Typography)(({theme}) => ({
+    [theme.breakpoints.up("md")]: {
+        fontSize: "1rem"
+    }
+}));
+
 export const StyledLoadingPaperSimilarProduct = styled(Paper)(() => ({
     display: "flex",
     flexDirection: "column",

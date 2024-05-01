@@ -2,6 +2,25 @@ import {Box, IconButton, MobileStepper, Paper, Skeleton, styled, Typography} fro
 import {Star} from "@mui/icons-material";
 import {green} from "@mui/material/colors";
 
+export const StyledProductContainerProductData = styled(Box)(({theme}) => ({
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+    margin: "auto",
+    backgroundColor: theme.palette.grey["100"],
+    padding: "1.5rem 1rem",
+    borderRadius: theme.shape.borderRadius,
+    maxWidth: "100dvw",
+
+    [theme.breakpoints.up('md')]: {
+        width: "90%"
+    },
+
+    "&::-webkit-scrollbar": {
+        display: "none"
+    },
+}));
+
 export const StyledProductImageInfoContainerProductData = styled(Box)(({theme}) => ({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",

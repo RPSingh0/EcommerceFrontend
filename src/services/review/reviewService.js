@@ -39,17 +39,3 @@ export async function deleteReviewService({productId, token}) {
 
     return data;
 }
-
-export async function clearCartService(token) {
-    let {status, data} = await axios.post(`${URL}/clearCart`, {}, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-
-    if (status !== 201) {
-        throw new Error('Unable to clear cart...');
-    }
-
-    return data;
-}

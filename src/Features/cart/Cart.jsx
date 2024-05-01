@@ -1,11 +1,16 @@
+import React from "react";
 import {Divider} from "@mui/material";
-import {StyledCartContainer} from "../Ui/RStyledComponents.jsx";
 import CartItem from "./CartItem.jsx";
 import CartOverview from "./CartOverview.jsx";
 import {useCartContext} from "../../Contexts/CartContext.jsx";
 import {useSelector} from "react-redux";
 import {isUserLoggedIn} from "../../services/user/userSlice.js";
-import {CartEmptyOrLoginRequired, CartLoadingCircularProgress, StyledCartItemBoxCart} from "./CartRComponents.jsx";
+import {
+    CartEmptyOrLoginRequired,
+    CartLoadingCircularProgress,
+    StyledCartItemBoxCart,
+    StyledContainerCart
+} from "./CartRComponents.jsx";
 
 function Cart() {
 
@@ -29,17 +34,17 @@ function Cart() {
     return (
         <>
             {!isLoadingCart && !cartError &&
-                <StyledCartContainer>
+                <StyledContainerCart>
                     <StyledCartItemBoxCart>
                         {cartData.data.products.map(item =>
-                            <>
+                            <React.Fragment key={`cart-item-${item._id}`}>
                                 <CartItem item={item}/>
                                 <Divider/>
-                            </>)
+                            </React.Fragment>)
                         }
                     </StyledCartItemBoxCart>
                     <CartOverview/>
-                </StyledCartContainer>
+                </StyledContainerCart>
             }
             {isLoadingCart && <CartLoadingCircularProgress/>}
         </>

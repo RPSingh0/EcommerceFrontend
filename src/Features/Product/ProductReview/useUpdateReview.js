@@ -11,7 +11,7 @@ export function useUpdateReview() {
             if (error) {
                 toast.error(error.response.data.message);
             } else {
-                queryClient.invalidateQueries(['reviews'])
+                queryClient.invalidateQueries([`reviews-${data.data.review.productId}`])
             }
         }
     });

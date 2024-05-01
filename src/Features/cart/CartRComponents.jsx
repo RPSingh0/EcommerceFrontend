@@ -1,5 +1,34 @@
 import {Box, CircularProgress, styled, Typography} from "@mui/material";
 
+export const StyledContainerCart = styled(Box)(({theme}) => ({
+    margin: "auto",
+    backgroundColor: theme.palette.grey["100"],
+    padding: "1.5rem 1rem",
+    borderRadius: theme.shape.borderRadius,
+    display: "grid",
+    gridTemplateColumns: "4fr 2fr",
+    columnGap: "1rem",
+
+    [theme.breakpoints.down('lg')]: {
+        gridTemplateColumns: "1fr 1fr"
+    },
+
+    [theme.breakpoints.up('md')]: {
+        width: "90%"
+    },
+
+    [theme.breakpoints.down('md')]: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem"
+    },
+
+    "&::-webkit-scrollbar": {
+        display: "none"
+    },
+}));
+
 export const StyledCartEmptyOrLoginRequiredBoxCart = styled(Box)(() => ({
     position: "absolute",
     height: "15rem",
