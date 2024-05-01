@@ -1,22 +1,18 @@
-import {Box, styled, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import {parentCategoryToIconMap, toTitleCase} from "../../utilities/util.jsx";
-
-const StyledParentCategoryBox = styled(Box)(() => ({
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "0.2rem",
-}))
+import {NavBarElementBoxGlobalNavBar} from "./GlobalNavBarRComponents.jsx";
 
 function GlobalNavBarNavElement({category}) {
+
+    const categoryIcon = parentCategoryToIconMap[category];
+
     return (
-        <StyledParentCategoryBox>
-            {parentCategoryToIconMap[category]}
+        <NavBarElementBoxGlobalNavBar>
+            {categoryIcon}
             <Typography variant={"subtitle2"} noWrap>
                 {toTitleCase(category)}
             </Typography>
-        </StyledParentCategoryBox>
+        </NavBarElementBoxGlobalNavBar>
     );
 }
 
