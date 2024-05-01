@@ -4,7 +4,7 @@ const URL = 'http://localhost:3000/api/v1/review';
 
 export async function updateReviewService({productId, review, rating, token}) {
 
-    let {status, data} = await axios.patch(`${URL}/update`, {
+    let {data} = await axios.patch(`${URL}/update`, {
         productId: productId,
         review: review,
         rating: rating
@@ -13,10 +13,6 @@ export async function updateReviewService({productId, review, rating, token}) {
             Authorization: `Bearer ${token}`
         }
     });
-
-    if (status !== 201) {
-        throw new Error('Unable to update review...');
-    }
 
     return data;
 }
@@ -33,17 +29,13 @@ export async function getReviewsForProductService(productId) {
 }
 
 export async function deleteReviewService({productId, token}) {
-    let {status, data} = await axios.post(`${URL}/delete`, {
+    let {data} = await axios.post(`${URL}/delete`, {
         productId: productId
     }, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
-
-    if (status !== 200) {
-        throw new Error('Unable to delete review...');
-    }
 
     return data;
 }

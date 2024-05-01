@@ -1,12 +1,12 @@
 import {Box, Button, ButtonGroup, styled, Typography} from "@mui/material";
 import {Add, AddShoppingCart, Remove, ShoppingBag} from "@mui/icons-material";
 import {useState} from "react";
-import {useSingleProductContext} from "../../Contexts/SingleProductContext.jsx";
+import {useSingleProductContext} from "../../../Contexts/SingleProductContext.jsx";
 import {useSelector} from "react-redux";
-import {isUserLoggedIn} from "../../services/user/userSlice.js";
+import {isUserLoggedIn} from "../../../services/user/userSlice.js";
 import toast from "react-hot-toast";
-import {useUpdateCart} from "../cart/useUpdateCart.js";
-import {getAuthToken} from "../../services/user/authStatusSlice.js";
+import {useUpdateCart} from "../../cart/useUpdateCart.js";
+import {getAuthToken} from "../../../services/user/authStatusSlice.js";
 
 const StyledAddToCartAndBuyNowParentBox = styled(Box)(({theme}) => ({
     display: "flex",

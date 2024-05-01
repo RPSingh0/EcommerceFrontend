@@ -5,7 +5,7 @@ import BestOfSubCategory from "./Features/Dashboard/BestOfSubCategory.jsx";
 import PageNotFound from "./Features/404NotFound/PageNotFound.jsx";
 import SingleSubCategoryByParentContainer from "./Features/Dashboard/SingleSubCategory.jsx";
 import ProductsBySubCategory from "./Features/ProductsDashboard/ProductsBySubCategory.jsx";
-import SingleProduct from "./Features/Product/SingleProduct.jsx";
+import SingleProduct from "./Features/Product/ProductData/SingleProduct.jsx";
 import Signup from "./Features/Authentication/Signup.jsx";
 import Login from "./Features/Authentication/Login.jsx";
 import {Toaster} from "react-hot-toast";

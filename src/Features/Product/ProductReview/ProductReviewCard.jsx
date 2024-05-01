@@ -1,4 +1,4 @@
-import {Avatar, Box, IconButton, Paper, Rating, Typography} from "@mui/material";
+import {Box, IconButton, Rating, Typography} from "@mui/material";
 import {DeleteOutlined, EditOutlined} from "@mui/icons-material";
 import {useSelector} from "react-redux";
 import {getUserId} from "../../../services/user/userSlice.js";
@@ -8,6 +8,11 @@ import {useState} from "react";
 import {useDeleteReview} from "./useDeleteReview.js";
 import {getAuthToken} from "../../../services/user/authStatusSlice.js";
 import toast from "react-hot-toast";
+import {
+    ProductReviewUserAvatar,
+    StyledReviewContainerPaperProductReview,
+    StyledReviewUserNameAndActionContainerProductReview
+} from "./ProductReviewRComponents.jsx";
 
 function ProductReviewCard({item}) {
     const userId = useSelector(getUserId);
@@ -31,26 +36,15 @@ function ProductReviewCard({item}) {
         }, {
             onSuccess: () => {
                 toast.success("Review deleted");
-            },
-            onError: (error) => {
-                console.log(error);
             }
         })
     }
 
     return (
-        <Paper sx={{
-            display: "flex",
-            flexDirection: "row",
-            gap: "1rem",
-            padding: "1rem",
-            minWidth: "20rem",
-            maxWidth: "20rem"
-        }}>
-            <Avatar alt="Remy Sharp" src={item.user.userImage ? item.user.userImage : '/user/user-not-found.jpg'}/>
+        <StyledReviewContainerPaperProductReview>
+            <ProductReviewUserAvatar userImage={item.user.userImage} altText={`user-${item.user.firstName}`}/>
             <Box>
-                <Box
-                    sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+                <StyledReviewUserNameAndActionContainerProductReview>
                     <Typography variant={"subtitle2"}>
                         {item.user.firstName} {item.user.lastName}
                     </Typography>
@@ -66,13 +60,13 @@ function ProductReviewCard({item}) {
                                                reviewToEdit={item}/>
                         </Box>
                     }
-                </Box>
+                </StyledReviewUserNameAndActionContainerProductReview>
                 <Rating value={item.rating} size={"small"} readOnly/>
                 <Typography variant={"body2"}>
                     {item.review}
                 </Typography>
             </Box>
-        </Paper>
+        </StyledReviewContainerPaperProductReview>
     );
 }
 
