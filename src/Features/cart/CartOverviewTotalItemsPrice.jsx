@@ -23,7 +23,7 @@ function CartOverviewTotalItemsPrice() {
                     Total Price
                 </Typography>
                 <Typography variant={"subtitle2"}>
-                    &#x20B9; {cartPrice} /-
+                    &#x20B9;{cartPrice} /-
                 </Typography>
             </StyledCartOverviewTotalItemsPriceContainerCart>
         </Box>

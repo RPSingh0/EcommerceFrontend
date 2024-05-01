@@ -4,7 +4,7 @@ import AppLayout from "./components/AppLayout/AppLayout.jsx";
 import BestOfSubCategory from "./Features/Dashboard/BestOfSubCategory.jsx";
 import PageNotFound from "./Features/404NotFound/PageNotFound.jsx";
 import SingleSubCategoryByParentContainer from "./Features/Dashboard/SingleSubCategory.jsx";
-import ProductsBySubCategory from "./Features/ProductsDashboard/ProductsBySubCategory.jsx";
+import SubCategoryProductDashboard from "./Features/SubCategoryProductDashboard/SubCategoryProductDashboard.jsx";
 import SingleProduct from "./Features/Product/ProductData/SingleProduct.jsx";
 import Signup from "./Features/Authentication/Signup.jsx";
 import Login from "./Features/Authentication/Login.jsx";
@@ -37,7 +37,7 @@ export default function App() {
                             <Route path={"by/parent/:category"}>
                                 <Route path={""} element={<SingleSubCategoryByParentContainer/>}/>
                                 <Route path={":subCategory"}>
-                                    <Route path={""} element={<ProductsBySubCategory/>}/>
+                                    <Route path={""} element={<SubCategoryProductDashboard/>}/>
                                     <Route path={":productId"} element={<SingleProduct/>}/>
                                 </Route>
                             </Route>

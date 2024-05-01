@@ -4,17 +4,13 @@ const URL = 'http://localhost:3000/api/v1/user';
 
 export async function updateWishlistService({identifier, token}) {
 
-    let {status, data} = await axios.post(`${URL}/updateWishlist`, {
+    let {data} = await axios.post(`${URL}/updateWishlist`, {
         identifier: identifier,
     }, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     });
-
-    if (status !== 201) {
-        throw new Error('Unable to update wishlist...');
-    }
 
     return data;
 }
