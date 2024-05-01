@@ -1,4 +1,4 @@
-import {AppBar, Box, Toolbar} from "@mui/material";
+import {AppBar, Box} from "@mui/material";
 import OpenMenu from "./OpenMenu.jsx";
 import SiteLogo from "./SiteLogo.jsx";
 import SearchBar from "./SearchBar.jsx";
@@ -6,6 +6,7 @@ import UserNavData from "./UserNavData.jsx";
 import MenuDrawer from "./MenuDrawer.jsx";
 import {useState} from "react";
 import GlobalNavBar from "../GlobalNavBar/GlobalNavBar.jsx";
+import {StyledToolbarHeader} from "./HeaderRComponents.jsx";
 
 
 function Header() {
@@ -14,14 +15,14 @@ function Header() {
 
     return (
         <AppBar position={"sticky"}>
-            <Toolbar sx={{justifyContent: "space-between", gap: "1rem"}}>
+            <StyledToolbarHeader>
                 <OpenMenu toggleHeader={setIsHeaderOpen}/>
                 <SiteLogo/>
                 <SearchBar/>
                 <Box sx={{flexGrow: 1}}></Box>
                 <UserNavData/>
                 <MenuDrawer isOpen={isHeaderOpen} toggleHeader={setIsHeaderOpen}/>
-            </Toolbar>
+            </StyledToolbarHeader>
             <GlobalNavBar/>
         </AppBar>
     );

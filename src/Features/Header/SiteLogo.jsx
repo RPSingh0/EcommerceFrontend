@@ -1,20 +1,12 @@
 import {Typography} from "@mui/material";
-import {NavLink} from "react-router-dom";
+import {CustomSiteLogoNavLink} from "./HeaderRComponents.jsx";
 
 function SiteLogo() {
     return (
-        <Typography
-            variant={"h6"}
-            noWrap
-            component={"div"}
-            sx={{display: {xs: "none", sm: "none", md: "block"}}}
-        >
-            <NavLink to={"/home"} style={{
-                textDecoration: "none",
-                color: "#ffffff",
-            }}>
+        <Typography variant={"h6"} noWrap component={"div"} sx={{display: {xs: "none", sm: "none", md: "block"}}}>
+            <CustomSiteLogoNavLink link={"/home"}>
                 ECommerce
-            </NavLink>
+            </CustomSiteLogoNavLink>
         </Typography>
     );
 }

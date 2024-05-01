@@ -1,6 +1,5 @@
-import {Box, Button, Drawer, styled, Typography} from "@mui/material";
+import {Drawer} from "@mui/material";
 import HeaderUser from "./HeaderUser.jsx";
-import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserName, isUserLoggedIn, logoutUser} from "../../services/user/userSlice.js";
 import {
@@ -10,32 +9,15 @@ import {
     LocalOfferOutlined,
     LoginOutlined,
     LogoutOutlined,
-    QueryStatsOutlined,
     ShoppingCartOutlined
 } from "@mui/icons-material";
-import {removeAuthStatus, setAuthStatus} from "../../services/user/authStatusSlice.js";
-
-const StyledDrawerLink = styled(Button)(() => ({
-    display: "flex",
-    flexDirection: "row",
-    gap: "1rem",
-    alignItems: "center",
-    justifyContent: "start",
-}));
-
-function CustomDrawerButton({buttonText, linkTo, toggleHeader, clickHandler, children}) {
-    return (
-        <Link to={linkTo} onClick={() => toggleHeader(false)} style={{textDecoration: "none"}}>
-            <StyledDrawerLink fullWidth onClick={clickHandler ? clickHandler : null}>
-                {children}
-                <Typography variant={"subtitle1"}>
-                    {buttonText}
-                </Typography>
-            </StyledDrawerLink>
-        </Link>
-
-    );
-}
+import {removeAuthStatus} from "../../services/user/authStatusSlice.js";
+import {
+    CustomDrawerButton,
+    DisplayUserName,
+    StyledDrawerElementContainerHeader,
+    StyledDrawerLinkContainerHeader
+} from "./HeaderRComponents.jsx";
 
 function MenuDrawer({isOpen, toggleHeader}) {
 
@@ -54,10 +36,10 @@ function MenuDrawer({isOpen, toggleHeader}) {
             keepMounted
             onClose={() => toggleHeader(false)}
         >
-            <Box sx={{display: "flex", flexDirection: "column", gap: "1rem", padding: "2rem", alignItems: "center"}}>
+            <StyledDrawerElementContainerHeader>
                 <HeaderUser height={64} width={64}/>
-                {isLoggedIn ? <Typography variant={"h6"}>{username}</Typography> : ""}
-                <Box sx={{display: "flex", flexDirection: "column", gap: "1rem", width: "100%"}}>
+                <DisplayUserName isLoggedIn={isLoggedIn} username={username}/>
+                <StyledDrawerLinkContainerHeader>
                     {!isLoggedIn &&
                         <>
                             <CustomDrawerButton buttonText={"Log In"} linkTo={"/login"} toggleHeader={toggleHeader}>
@@ -74,13 +56,13 @@ function MenuDrawer({isOpen, toggleHeader}) {
                     <CustomDrawerButton buttonText={"Cart"} linkTo={"/cart"} toggleHeader={toggleHeader}>
                         <ShoppingCartOutlined/>
                     </CustomDrawerButton>
-                    <CustomDrawerButton buttonText={"Orders"} linkTo={"/orders"} toggleHeader={toggleHeader}>
-                        <LocalOfferOutlined/>
-                    </CustomDrawerButton>
                     {isLoggedIn &&
                         <>
                             <CustomDrawerButton buttonText={"Account"} linkTo={"/account"} toggleHeader={toggleHeader}>
                                 <AccountCircleOutlined/>
+                            </CustomDrawerButton>
+                            <CustomDrawerButton buttonText={"Orders"} linkTo={"/orders"} toggleHeader={toggleHeader}>
+                                <LocalOfferOutlined/>
                             </CustomDrawerButton>
                             <CustomDrawerButton buttonText={"Log Out"} linkTo={""} toggleHeader={toggleHeader}
                                                 clickHandler={handleUserLogout}>
@@ -88,8 +70,8 @@ function MenuDrawer({isOpen, toggleHeader}) {
                             </CustomDrawerButton>
                         </>
                     }
-                </Box>
-            </Box>
+                </StyledDrawerLinkContainerHeader>
+            </StyledDrawerElementContainerHeader>
         </Drawer>
     );
 }

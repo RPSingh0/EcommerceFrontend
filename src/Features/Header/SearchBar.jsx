@@ -1,37 +1,16 @@
-import {alpha, Box, InputBase, styled} from "@mui/material";
 import {Search} from "@mui/icons-material";
-
-const StyledSearchBox = styled(Box)(({theme}) => ({
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    borderRadius: theme.shape.borderRadius,
-    padding: "0.4rem 0.8rem",
-    gap: "0.2rem"
-}));
-
-const StyledInputBase = styled(InputBase)(({theme}) => ({
-    color: "inherit"
-}));
-
-const StyledSearchIconBox = styled(Box)(({theme}) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "0.1rem 0.2rem"
-}))
+import {StyledInputBaseHeader, StyledSearchBoxHeader, StyledSearchIconBoxHeader} from "./HeaderRComponents.jsx";
 
 function SearchBar() {
     return (
-        <StyledSearchBox>
-            <StyledSearchIconBox>
+        <StyledSearchBoxHeader>
+            <StyledSearchIconBoxHeader>
                 <Search/>
-            </StyledSearchIconBox>
-            <StyledInputBase
+            </StyledSearchIconBoxHeader>
+            <StyledInputBaseHeader
                 placeholder={"Search..."}
             />
-        </StyledSearchBox>
+        </StyledSearchBoxHeader>
     );
 }
 
