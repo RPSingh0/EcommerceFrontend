@@ -8,6 +8,8 @@ import {getAuthToken} from "../../services/user/authStatusSlice.js";
 import toast from "react-hot-toast";
 import CartOverviewTotalItemsPrice from "./CartOverviewTotalItemsPrice.jsx";
 import {StyledCartOverviewContainerCart} from "./CartRComponents.jsx";
+import {usePurchaseCart} from "./usePurchaseCart.js";
+import {v4} from "uuid";
 
 
 function CartOverview() {
@@ -15,11 +17,23 @@ function CartOverview() {
     const {isLoadingCart, cartData, cartError} = useCartContext();
     const token = useSelector(getAuthToken);
     const {isClearing, clearCart} = useClearCart();
+    const {isPurchasing, purchaseCart} = usePurchaseCart()
 
     function handleClearCart() {
         clearCart(token, {
             onSuccess: () => {
                 toast.success("Cart Cleared");
+            }
+        })
+    }
+
+    function handlePurchaseCart() {
+        purchaseCart({
+            transactionId: v4(),
+            token: token
+        }, {
+            onSuccess: (data) => {
+                window.location.href = data.payAt;
             }
         })
     }
@@ -37,7 +51,8 @@ function CartOverview() {
             <Divider/>
             <CartOverviewTotalItemsPrice/>
             <ButtonGroup variant="outlined" fullWidth>
-                <Button size={"small"} startIcon={<PaymentOutlined/>} disabled={isClearing}>
+                <Button size={"small"} startIcon={<PaymentOutlined/>} disabled={isClearing || isPurchasing}
+                        onClick={handlePurchaseCart}>
                     Checkout
                 </Button>
                 <Button size={"small"} startIcon={<ClearOutlined/>} onClick={handleClearCart} disabled={isClearing}>

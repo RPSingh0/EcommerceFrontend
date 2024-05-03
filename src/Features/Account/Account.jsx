@@ -13,6 +13,7 @@ import {
     StyledFlexColumnOneGapBoxAccount,
     StyledUserInfoAccount
 } from "./AccountRComponents.jsx";
+import AccountOrderInfo from "./AccountOrderInfo.jsx";
 
 
 function Account() {
@@ -43,6 +44,8 @@ function Account() {
                     <AccountCartInfo/>
                     <Divider/>
                     <AccountWishlistInfo/>
+                    <Divider/>
+                    <AccountOrderInfo/>
                     {isEditModalOpen &&
                         <EditUserDetails isEditModalOpen={isEditModalOpen} setIsEditModalOpen={setIsEditModalOpen}/>}
                 </StyledFlexColumnOneGapBoxAccount>

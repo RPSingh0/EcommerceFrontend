@@ -5,7 +5,6 @@ import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {getAuthStatus} from "../../services/user/authStatusSlice.js";
 import {useLoginWithToken} from "../../Features/Authentication/useLoginWithToken.js";
-import toast from "react-hot-toast";
 
 function AppLayout() {
     const authStatus = useSelector(getAuthStatus);
@@ -16,10 +15,6 @@ function AppLayout() {
             loginUser({
                 email: authStatus.email,
                 token: authStatus.token
-            }, {
-                onSuccess: () => {
-                    toast.success("Logged in");
-                }
             })
         }
     }, []);

@@ -15,6 +15,9 @@ import {CartContextProvider} from "./Contexts/CartContext.jsx";
 import Wishlist from "./Features/wishlist/Wishlist.jsx";
 import {WishlistContextProvider} from "./Contexts/WishlistContext.jsx";
 import Account from "./Features/Account/Account.jsx";
+import OrderReceipt from "./Features/OrderReceipt/OrderReceipt.jsx";
+import {OrderContextProvider} from "./Contexts/OrderContext.jsx";
+import Orders from "./Features/Orders/Orders.jsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -45,11 +48,13 @@ export default function App() {
                         <Route path={"signup"} element={<Signup/>}/>
                         <Route path={"login"} element={<Login/>}/>
                         <Route path={"account"} element={
-                            <CartContextProvider>
-                                <WishlistContextProvider>
-                                    <Account/>
-                                </WishlistContextProvider>
-                            </CartContextProvider>
+                            <OrderContextProvider>
+                                <CartContextProvider>
+                                    <WishlistContextProvider>
+                                        <Account/>
+                                    </WishlistContextProvider>
+                                </CartContextProvider>
+                            </OrderContextProvider>
                         }/>
                         <Route path={"cart"} element={
                             <CartContextProvider>
@@ -60,6 +65,12 @@ export default function App() {
                             <WishlistContextProvider>
                                 <Wishlist/>
                             </WishlistContextProvider>
+                        }/>
+                        <Route path={"order/:orderId"} element={<OrderReceipt/>}/>
+                        <Route path={"orders"} element={
+                            <OrderContextProvider>
+                                <Orders/>
+                            </OrderContextProvider>
                         }/>
                         <Route path={"*"} element={<PageNotFound/>}/>
                     </Route>

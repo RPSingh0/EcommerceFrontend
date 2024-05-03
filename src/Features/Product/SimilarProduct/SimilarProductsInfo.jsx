@@ -1,5 +1,5 @@
 import {Box} from "@mui/material";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {ArrowForward} from "@mui/icons-material";
 import {useSingleProductContext} from "../../../Contexts/SingleProductContext.jsx";
 import SimilarProductCard from "./SimilarProductCard.jsx";
@@ -13,6 +13,7 @@ import {
 function SimilarProductsInfo() {
 
     const {isLoadingSimilarProducts, similarProductsData, similarProductsError} = useSingleProductContext();
+    const {category, subCategory} = useParams();
 
     return (
         <Box>
@@ -20,7 +21,7 @@ function SimilarProductsInfo() {
                 <StyledHeadingSimilarProduct variant={"subtitle2"}>
                     Similar Products
                 </StyledHeadingSimilarProduct>
-                <Link to={"/all"}>
+                <Link to={`/home/by/parent/${category}/${subCategory}`}>
                     <ArrowForward/>
                 </Link>
             </StyledHeaderBoxSimilarProducts>
