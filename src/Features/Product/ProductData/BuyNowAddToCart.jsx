@@ -7,6 +7,8 @@ import {isUserLoggedIn} from "../../../services/user/userSlice.js";
 import toast from "react-hot-toast";
 import {useUpdateCart} from "../../cart/useUpdateCart.js";
 import {getAuthToken} from "../../../services/user/authStatusSlice.js";
+import {useNavigate} from "react-router-dom";
+import {useQueryClient} from "@tanstack/react-query";
 
 const StyledAddToCartAndBuyNowParentBox = styled(Box)(({theme}) => ({
     display: "flex",
@@ -49,7 +51,9 @@ function BuyNowAddToCart() {
     const [quantity, setQuantity] = useState(1);
     const {singleProductData: {data: {product: {_id}}}} = useSingleProductContext();
     const isLoggedIn = useSelector(isUserLoggedIn);
+    const queryClient = useQueryClient();
     const authToken = useSelector(getAuthToken);
+    const navigate = useNavigate();
     const {isCreating: isAdding, updateCart} = useUpdateCart();
 
     function increaseQuantity() {
@@ -71,12 +75,15 @@ function BuyNowAddToCart() {
             }, {
                 onSuccess: () => {
                     toast.success("Item added to cart")
-                },
-                onError: (error) => {
-                    console.log(error)
                 }
             })
         }
+    }
+
+    async function handleBuyNow() {
+        handleAddToCart();
+        await queryClient.invalidateQueries({queryKey: ['cart']})
+        navigate("/cart");
     }
 
     return (
@@ -99,7 +106,8 @@ function BuyNowAddToCart() {
                         Add To Cart
                     </StyledButtonTypography>
                 </Button>
-                <Button variant={"contained"} startIcon={<ShoppingBag/>} fullWidth>
+                <Button variant={"contained"} startIcon={<ShoppingBag/>} fullWidth onClick={handleBuyNow}
+                        disabled={isAdding}>
                     <StyledButtonTypography variant={"body2"}>
                         Buy Now
                     </StyledButtonTypography>

@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import {NavLink} from "react-router-dom";
 import {getFormattedDate} from "../../utilities/util.jsx";
+import {OpenInNewOutlined} from "@mui/icons-material";
 
 export const StyledAccountDataContainerAccount = styled(Box)(({theme}) => ({
     margin: "auto",
@@ -159,12 +160,22 @@ export function AccountSecondaryDataCard({cardImage, name}) {
     );
 }
 
+export function LinkToOrderReceipt({link}) {
+    return (
+        <NavLink to={link}>
+            <IconButton>
+                <OpenInNewOutlined/>
+            </IconButton>
+        </NavLink>
+    );
+}
+
 export function AccountOrderDataCard({orderId, price, quantity, orderDate}) {
     return (
         <Card sx={{minWidth: 250, maxWidth: 250, padding: "0.2rem"}}>
             <CardContent>
                 <Typography gutterBottom variant="subtitle2" component="div">
-                    Order#: {orderId}
+                    Order#: {orderId} <LinkToOrderReceipt link={`/order/${orderId}`}/>
                 </Typography>
                 <Typography gutterBottom variant="caption" component="div">
                     Total price:  &#x20B9;{price}/-

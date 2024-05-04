@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = 'http://localhost:3000/api/v1/user';
+const URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/user`;
 
 export async function signupUserService({
     firstName, lastName, email, password, confirmPassword, address, mobileNumber, userImage

@@ -25,7 +25,7 @@ function AccountOrderInfo() {
                 {!isLoadingOrders && !ordersError && ordersData.data.orderDetails.length === 0 &&
                     <NoItemContainer
                         cardText={"You don't have any orders with us..."}
-                        buttonText={"OrderReceipt Something"}
+                        buttonText={"Order Something"}
                         buttonLink={"/home"}
                     >
                         <ShopOutlined/>

@@ -1,16 +1,6 @@
-import {
-    Box,
-    Button,
-    Card,
-    CardActionArea,
-    CardActions,
-    CardContent,
-    CardMedia,
-    CircularProgress,
-    styled,
-    Typography
-} from "@mui/material";
-import {DeleteOutline, ShoppingCartCheckoutOutlined} from "@mui/icons-material";
+import {Box, Card, CardMedia, CircularProgress, IconButton, Paper, styled, Typography} from "@mui/material";
+import {OpenInNewOutlined} from "@mui/icons-material";
+import {NavLink} from "react-router-dom";
 
 export const StyledOrdersContainerOrders = styled(Box)(({theme}) => ({
     margin: "auto",
@@ -40,6 +30,37 @@ export const StyledNoOrdersOrLoginRequiredBoxOrders = styled(Box)(() => ({
     transform: "translate(-50%, -50%)"
 }));
 
+export const StyledOrderCardOrders = styled(Card)(() => ({
+    padding: "1rem",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    minWidth: "20rem",
+    maxWidth: "20rem"
+}));
+
+export const StyledFixedCircularProgressBoxOrders = styled(Box)(() => ({
+    position: "fixed",
+    top: "50%",
+    right: "50%",
+    transform: "translate(50%, 50%)"
+}));
+
+export const StyledOrderInfoPaper = styled(Paper)(() => ({
+    display: "flex",
+    flexDirection: "column",
+    padding: "1rem",
+    gap: "1rem"
+}));
+
+export const StyledOrderItemContainer = styled(Box)(() => ({
+    display: "flex",
+    flexDirection: "row",
+    overflowX: "auto",
+    padding: "1rem 0",
+    gap: "1rem"
+}));
+
 export function NoOrdersOrLoginRequired({image, text}) {
     return (
         <StyledNoOrdersOrLoginRequiredBoxOrders>
@@ -51,13 +72,6 @@ export function NoOrdersOrLoginRequired({image, text}) {
     );
 }
 
-export const StyledFixedCircularProgressBoxOrders = styled(Box)(() => ({
-    position: "fixed",
-    top: "50%",
-    right: "50%",
-    transform: "translate(50%, 50%)"
-}));
-
 export function OrdersLoadingCircularProgress() {
     return (
         <StyledFixedCircularProgressBoxOrders>
@@ -65,15 +79,6 @@ export function OrdersLoadingCircularProgress() {
         </StyledFixedCircularProgressBoxOrders>
     );
 }
-
-export const StyledOrderCardOrders = styled(Card)(() => ({
-    padding: "1rem",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    minWidth: "20rem",
-    maxWidth: "20rem"
-}));
 
 export function OrderItemCardMedia({image, altText}) {
     return (
@@ -86,23 +91,12 @@ export function OrderItemCardMedia({image, altText}) {
     );
 }
 
-export function OrderedItem({item}) {
+export function LinkToOrderReceipt({link}) {
     return (
-        <StyledOrderCardOrders>
-            <OrderItemCardMedia image={item.productImage} altText={`${item.name}-cover-image`}/>
-            <CardContent>
-                <Typography gutterBottom variant="body2" component="div">
-                    {item.productName}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary">
-                    {item.quantity} x &#x20B9; {item.productPrice} /-
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button variant={"outlined"} size="small" startIcon={<ShoppingCartCheckoutOutlined/>} fullWidth>
-                    Write a Review
-                </Button>
-            </CardActions>
-        </StyledOrderCardOrders>
+        <NavLink to={link}>
+            <IconButton>
+                <OpenInNewOutlined/>
+            </IconButton>
+        </NavLink>
     );
 }

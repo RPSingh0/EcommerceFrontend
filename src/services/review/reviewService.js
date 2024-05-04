@@ -1,6 +1,21 @@
 import axios from "axios";
 
-const URL = 'http://localhost:3000/api/v1/review';
+const URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/review`;
+
+export async function createReviewService({productId, review, rating, token}) {
+
+    let {data} = await axios.post(`${URL}/create`, {
+        productId: productId,
+        review: review,
+        rating: rating
+    }, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    return data;
+}
 
 export async function updateReviewService({productId, review, rating, token}) {
 

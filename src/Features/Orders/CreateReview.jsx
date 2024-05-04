@@ -1,27 +1,26 @@
-import {Button, Dialog, DialogContent, IconButton} from "@mui/material";
-import {CloseOutlined} from "@mui/icons-material";
-import {InputRating, MultilineTextFieldWithController} from "../../Forms/FormFields.jsx";
 import {useForm} from "react-hook-form";
-import {useUpdateReview} from "./useUpdateReview.js";
 import {useSelector} from "react-redux";
-import {getAuthToken} from "../../../services/user/authStatusSlice.js";
+import {getAuthToken} from "../../services/user/authStatusSlice.js";
+import {useCreateReview} from "./useCreateReview.js";
 import toast from "react-hot-toast";
 import {
     StyledEditReviewDialogTitleProductReview,
     StyledEditReviewFormProductReview
-} from "./ProductReviewRComponents.jsx";
+} from "../Product/ProductReview/ProductReviewRComponents.jsx";
+import {Button, Dialog, DialogContent, IconButton} from "@mui/material";
+import {CloseOutlined} from "@mui/icons-material";
+import {InputRating, MultilineTextFieldWithController} from "../Forms/FormFields.jsx";
 
-function EditProductReview({reviewToEdit, isOpen, closeModal}) {
-
+function CreateOrderReview({item, isFormOpen, closeForm}) {
     const {control, handleSubmit, formState: {errors}} = useForm();
     const token = useSelector(getAuthToken);
-    const {isUpdating, updateReview} = useUpdateReview();
+    const {isCreating, createReview} = useCreateReview();
 
     function onSubmit(data) {
         const {review, rating} = data;
-        const productId = reviewToEdit.productId;
+        const productId = item.productId;
 
-        updateReview({
+        createReview({
             productId: productId,
             review: review,
             rating: Number(rating),
@@ -29,20 +28,20 @@ function EditProductReview({reviewToEdit, isOpen, closeModal}) {
         }, {
             onSuccess: () => {
                 toast.success("Review Updated");
-                closeModal();
+                closeForm();
             }
         });
     }
 
     return (
         <Dialog
-            open={isOpen}
-            onClose={closeModal}
+            open={isFormOpen}
+            onClose={closeForm}
             sx={{backdropFilter: "blur(5px)"}}
         >
             <StyledEditReviewDialogTitleProductReview>
                 Edit Review
-                <IconButton onClick={closeModal}>
+                <IconButton onClick={closeForm}>
                     <CloseOutlined/>
                 </IconButton>
             </StyledEditReviewDialogTitleProductReview>
@@ -52,8 +51,7 @@ function EditProductReview({reviewToEdit, isOpen, closeModal}) {
                         control={control}
                         name={"rating"}
                         id={"rating"}
-                        defaultValue={reviewToEdit.rating}
-                        disabled={isUpdating}
+                        disabled={isCreating}
                     />
                     <MultilineTextFieldWithController
                         control={control}
@@ -61,14 +59,13 @@ function EditProductReview({reviewToEdit, isOpen, closeModal}) {
                         name={"review"}
                         label={"Review"}
                         rows={4}
-                        disabled={isUpdating}
-                        defaultValue={reviewToEdit.review}
+                        disabled={isCreating}
                         requiredMessage={"Please provide a review"}
                         error={!!errors.review}
                         helperText={errors.review?.message}
                     />
-                    <Button variant={"outlined"} type={"submit"} disabled={isUpdating}>
-                        Update
+                    <Button variant={"outlined"} type={"submit"} disabled={isCreating}>
+                        Add Review
                     </Button>
                 </StyledEditReviewFormProductReview>
             </DialogContent>
@@ -76,4 +73,4 @@ function EditProductReview({reviewToEdit, isOpen, closeModal}) {
     );
 }
 
-export default EditProductReview;
+export default CreateOrderReview;

@@ -1,14 +1,18 @@
-import {Box, Paper, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {isUserLoggedIn} from "../../services/user/userSlice.js";
 import {
-    NoOrdersOrLoginRequired, OrderedItem,
+    LinkToOrderReceipt,
+    NoOrdersOrLoginRequired,
     OrdersLoadingCircularProgress,
+    StyledOrderInfoPaper,
+    StyledOrderItemContainer,
     StyledOrdersContainerOrders
 } from "./OrdersRComponents.jsx";
 import {CartEmptyOrLoginRequired} from "../cart/CartRComponents.jsx";
 import {useOrderContext} from "../../Contexts/OrderContext.jsx";
 import {getFormattedDate} from "../../utilities/util.jsx";
+import {OrderedItem} from "./OrderedItem.jsx";
 
 function Orders() {
 
@@ -34,17 +38,19 @@ function Orders() {
             {
                 !isLoadingOrders && !ordersError && ordersData.data.orderDetails.map((order, index) =>
                     <StyledOrdersContainerOrders key={`order-group-${index}`}>
-                        <Paper sx={{display: "flex", flexDirection: "column", padding: "1rem", gap: "1rem"}}>
+                        <StyledOrderInfoPaper>
                             <Typography variant={"body2"}>
-                                Order#: {order.transactionId}
+                                Order#: {order.transactionId} <LinkToOrderReceipt link={`/order/${order.transactionId}`}/>
                             </Typography>
                             <Typography variant={"body2"}>
                                 Order Date: {getFormattedDate(order.purchasedOn)}
                             </Typography>
-                        </Paper>
-                        <Box sx={{display: "flex", flexDirection: "row", overflowX: "auto", padding: "1rem 0", gap: "1rem"}}>
-                            {order.itemDetails.map((orderItem, subIndex) => <OrderedItem item={orderItem} key={`order-group-${index}-item-${subIndex}`}/>)}
-                        </Box>
+                        </StyledOrderInfoPaper>
+                        <StyledOrderItemContainer>
+                            {order.itemDetails.map((orderItem, subIndex) =>
+                                <OrderedItem item={orderItem} key={`order-group-${index}-item-${subIndex}`}/>)
+                            }
+                        </StyledOrderItemContainer>
                     </StyledOrdersContainerOrders>
                 )
             }

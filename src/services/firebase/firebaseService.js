@@ -2,13 +2,13 @@ import {initializeApp} from "firebase/app";
 import {getStorage} from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCR3GXQPu4jLt7yYi3UWrm9X7EDlqQP73I",
-    authDomain: "ecommerce-data-rupi.firebaseapp.com",
-    projectId: "ecommerce-data-rupi",
-    storageBucket: "ecommerce-data-rupi.appspot.com",
-    messagingSenderId: "104448358428",
-    appId: "1:104448358428:web:50f14d6a0ee5f313f347d9",
-    measurementId: "G-W2RLPMDP49"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 }
 
 const app = initializeApp(firebaseConfig);
