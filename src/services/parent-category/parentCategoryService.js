@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/parentCategory`;
+const URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/parentCategory`;
 
 export async function getAllParentCategory() {
     let {status, data} = await axios.get(`${URL}/all`);

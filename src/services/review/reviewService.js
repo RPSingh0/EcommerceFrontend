@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/review`;
+const URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/review`;
 
 export async function createReviewService({productId, review, rating, token}) {
 

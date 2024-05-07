@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/api/v1/user`;
+const URL = `${import.meta.env.VITE_BACKEND_URL}/api/v1/user`;
 
 export async function updateCartService({identifier, quantity, token}) {
 
