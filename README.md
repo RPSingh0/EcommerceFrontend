@@ -1,5 +1,5 @@
 # Ecommerce
-[Live View](https://github.com/RPSingh0/EcommerceFrontend)
+[Live View](https://rpsingh0.github.io/EcommerceFrontend/)
 
 ## Overview
 
