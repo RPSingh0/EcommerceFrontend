@@ -1,5 +1,5 @@
 # Ecommerce
-[Live View](http://ecommerce-production-r.s3-website-us-east-1.amazonaws.com)
+[Live View](https://github.com/RPSingh0/EcommerceFrontend)
 
 ## Overview
 
@@ -43,3 +43,71 @@ This project is an e-commerce website, forming a crucial part of our comprehensi
 | `/order/:orderId`                                   | Displays the receipt for a specific order.                 | `<OrderReceipt/>`                       |
 | `/orders`                                           | Displays the user's orders history.                        | `<Orders/>`                             |
 | `/*`                                                | Displays a 404 Page Not Found error for unmatched routes.  | `<PageNotFound/>`                       |
+
+
+## How to prepare this for GitHub pages
+
+* Install `gh-pages` with following command and save as dev dependency
+
+```bash
+npm install gh-pages --save-dev
+```
+
+* Now, head to `package.json` and the following at top
+
+```json
+{
+  "homepage": "https://<github-user-name>.github.io/<repository-name>/"
+}
+```
+
+* And add the following to the scripts (since we're using [Vite](https://vitejs.dev/guide/) for our application, we'll
+  be using deploy command with `dist` instead of `build`)
+
+```json
+{
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+}
+```
+
+* Now, head to `vite.config.js` and add the following in config
+
+```json
+{
+  "base": "/<repository-name>/"
+}
+```
+
+* One last change 😁, if you're using BrowserRouter with react-route, GitHub doesn't support that as of now, so go ahead
+  to your imports and change
+
+```js
+import {HashRouter} from "react-router-dom";
+```
+
+* And use `HashRouter` in place of `BrowserRoute`
+
+```jsx
+<HashRouter>
+    ...
+</HashRouter>
+```
+
+### After all the steps above, save all of your code and run the following command
+
+```bash
+npm run deploy
+```
+
+* This will do the following things
+    * Build the project and put the built files under `dist` directory
+    * Reach out to GitHub and create/update the build files under the branch `gh-pages`
+    * Once you see `Published` in your console, it's all done!
+
+### Now go to GitHub under the following path
+
+* `github` -> `repository` -> `settings` -> `pages`
+* And ensure that `gh-pages` is selected as deploy under `Build and deployment` section and `source` is set
+  to `Deploy from a branch`
+* After a few minutes, you'll be able to see the url for your site 🥳
